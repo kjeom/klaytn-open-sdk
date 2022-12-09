@@ -2,20 +2,12 @@ import {
     AccountCreatedBlockNumberOrHashParameterOneOf,
     Configuration,
     KlayAccountApi,
-} from "../api/klay";
+} from "../openapi/klay-account";
 
 const configuration = new Configuration({
     basePath: 'http://localhost:7151',
 });
 
-/*
-accountCreatedRequest = {
-            method: 'klay_accountCreated',
-            id: 1,
-            jsonrpc: '2.0',
-            params: [address, blockNumberOrHash]
-        }
- */
 const api = new KlayAccountApi(configuration);
 
 describe('testing index file', () => {

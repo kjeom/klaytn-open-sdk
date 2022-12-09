@@ -1,11 +1,18 @@
 generatorName: typescript-axios
-outputDir: ./api/governance
+outputDir: ./openapi/governance
 inputSpec: ../api/governance-api.yaml
 templateDir: ./template
 additionalProperties:
   withInterfaces: false
-  apiPackage: sdk.api
-  modelPackage: sdk.model
+  apiPackage: api
+  modelPackage: model
   withSeparateModelsAndApi: true
   useSingleRequestParameter: false
   stringEnums: true
+files:
+  apiInner.mustache:
+    templateType: API
+    destinationFilename: .ts
+  model.mustache:
+    templateType: Model
+    destinationFilename: .ts

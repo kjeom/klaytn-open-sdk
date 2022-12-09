@@ -24,7 +24,27 @@ import { {{classname}} } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
 {{/imports}}
 {{/withSeparateModelsAndApi}}
 {{^withSeparateModelsAndApi}}
+
 {{/withSeparateModelsAndApi}}
+
+{{#operations}}
+    {{^withInterfaces}}
+        {{#operation}}
+            {{^useSingleRequestParameter}}
+                {{#bodyParam}}
+// @ts-ignore
+import { {{dataType}}Instance } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
+                {{/bodyParam}}
+                {{#headerParams}}
+                    {{#isModel}}
+// @ts-ignore
+import { {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
+                    {{/isModel}}
+                {{/headerParams}}
+            {{/useSingleRequestParameter}}
+        {{/operation}}
+    {{/withInterfaces}}
+{{/operations}}
 {{#operations}}
 /**
  * {{classname}} - axios parameter creator{{#description}}
@@ -153,8 +173,8 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
                 {{/isString}}
                 {{^isString}}
                 {{! isString is falsy also for $ref that defines a string or enum type}}
-                localVarHeaderParameter['{{baseName}}'] = typeof {{paramName}} === 'string' 
-                    ? {{paramName}} 
+                localVarHeaderParameter['{{baseName}}'] = typeof {{paramName}} === 'string'
+                    ? {{paramName}}
                     : JSON.stringify({{paramName}});
                 {{/isString}}
             }
@@ -363,7 +383,13 @@ export class {{classname}} extends BaseAPI {
     }
     {{/useSingleRequestParameter}}
     {{^useSingleRequestParameter}}
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}options?: AxiosRequestConfig) {
+    public {{nickname}}({{#headerParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/headerParams}}options?: AxiosRequestConfig) {
+        {{#bodyParam}}
+        const {{paramName}} = {{dataType}}Instance( {
+            id: 1,
+            params: [{{#headerParams}}{{paramName}}{{^-last}},{{/-last}}{{/headerParams}}]
+        })
+        {{/bodyParam}}
         return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options).then((request) => request(this.axios, this.basePath));
     }
     {{/useSingleRequestParameter}}

@@ -1,0 +1,63 @@
+openapi: "3.0.2"
+x-send-defaults: true
+info:
+  title: KLAYTN OPEN API
+  version: "1.10.0"
+  contact:
+    name: API support
+    url: https://forum.klaytn.foundation/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+components:
+  schemas:
+    JsonRpc:
+      type: object
+      required:
+        - method
+        - id
+        - jsonrpc
+      properties:
+        method:
+          type: string
+          default: rpcMethod
+          description: Method name
+        id:
+          type: integer
+          default: 1
+          format: int32
+          description: Request ID
+        jsonrpc:
+          type: string
+          default: "2.0"
+          description: JSON-RPC Version (2.0)
+        params:
+          type: array
+          items: { }
+    JsonRpcResponse:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - result
+      properties:
+        jsonrpc:
+          type: string
+          default: "2.0"
+        id:
+          type: integer
+          format: int64
+        result: { }
+  responses:
+    default:
+      description: Default Error Response
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./error.yaml#/components/schemas/ParseError"
+x-explorer-enabled: true
+x-samples-enabled: true
+x-samples-languages": [ "curl", "javascript", "java", "typescript", "go", "python", "rust", "swift", "kotlin" ]
+paths:

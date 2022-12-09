@@ -1,0 +1,22 @@
+openapi: "3.0.2"
+x-send-defaults: true
+info:
+  title: KLAYTN OPEN API
+  version: "1.10.0"
+  contact:
+    name: API support
+    url: https://forum.klaytn.foundation/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:7151
+paths:
+  /klay/account/accountCreated:
+    $ref: ./klay/account.yaml#/paths/~1klay~1accountCreated
+
+x-explorer-enabled: true
+x-samples-enabled: true
+x-samples-languages": [ "curl", "javascript", "java", "typescript", "go", "python", "rust", "swift", "kotlin" ]
+

@@ -1,0 +1,64 @@
+openapi: "3.0.2"
+info:
+  title: KLAYTN OPEN API
+  version: 1.10.0
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+components:
+  schemas:
+    RewardSpec:
+      type: object
+      required:
+        - burnFee
+        - kfg
+        - kir
+        - minted
+        - proposer
+        - rewords
+        - stakers
+        - totalFee
+      properties:
+        burnFee:
+          type: integer
+          format: int64
+          description: the amount burnt
+        kgf:
+          type: integer
+          format: int64
+          description: the amount allocated to KGF
+        kir:
+          type: integer
+          format: int64
+          description: the amount allocated to KIR
+        minted:
+          type: integer
+          format: int64
+          description: the amount newly minted
+          example: 9600000000000000000
+        proposer:
+          type: integer
+          format: int64
+          description: the amount allocated to the block proposer
+          example: 9600000000000000000
+        rewords:
+          type: object
+          description: mapping from reward recipient to amounts
+          properties:
+            address:
+              type: string
+          required:
+            - address
+          additionalProperties:
+            type: integer
+          example:
+            0xb408fc9b2512284823264aceeb50d2970533b4ff: 9600000000000000000
+        stakers:
+          type: integer
+          format: int64
+          description: total amount allocated to stakers
+        totalFee:
+          type: integer
+          format: int64
+          description: total tx fee spent
+paths:

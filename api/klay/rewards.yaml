@@ -1,0 +1,63 @@
+openapi: "3.0.2"
+info:
+  title: KLAYTN OPEN API
+  version: "1.10.0"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:7151
+
+paths:
+  /klay/getRewards:
+    post:
+      operationId: getRewards
+      summary: Find distributed block rewards
+      description: |
+        Returns distributed block rewards information at the latest block number
+        
+        **JSONRPC:** `klay_getRewards`
+      tags:
+        - klay
+      parameters:
+        - name: blockNumberOrTag
+          schema:
+            oneOf:
+              - type: integer
+                format: BN | BigNumber
+              - type: string
+                enum: [latest, pending, earliest]
+            readOnly: true
+          description: |
+            blockNumber is the block number
+            blockTag is the string "latest", "earliest" or "pending"
+          in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "../common.yaml#/components/schemas/JsonRpc"
+                - type: object
+                  properties:
+                    method:
+                      type: string
+                      default: klay_getRewards
+                    params:
+                      example: ['latest']
+
+      responses:
+        200:
+          description: block rewards information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "../common.yaml#/components/schemas/JsonRpcResponse"
+                  - type: object
+                    properties:
+                      result:
+                        $ref: "../components/rewards.yaml#/components/schemas/RewardSpec"
+        default:
+          $ref: "../common.yaml#/components/responses/default"

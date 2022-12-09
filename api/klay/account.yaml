@@ -1,0 +1,74 @@
+openapi: "3.0.2"
+info:
+  title: KLAY OPEN API
+  version: "1.10.0"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:7151
+
+paths:
+  /klay/accountCreated:
+    post:
+      operationId: accountCreated
+      summary: Find if input address was created
+      description: |
+        Returns `true` if the account associated with the address is created. It returns `false` otherwise.
+        
+        **JSONRPC:** `klay_accountCreated`
+      tags:
+        - klay.account
+      parameters:
+        - name: address
+          schema:
+            type: string
+            format: 20-byte DATA
+            readOnly: true
+          description: Address
+          in: header
+        - name: blockNumberOrHash
+          schema:
+            oneOf:
+              - type: integer
+                format: BN | BigNumber
+              - type: string
+                enum: [latest, pending, earliest, genesis]
+            readOnly: true
+          description: |
+            Integer or hexadecimal block number, or the string `earliest`, `latest` or `pending` as in the [default block parameter](https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/block#the-default-block-parameter), or block hash.
+          in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "../common.yaml#/components/schemas/JsonRpc"
+                - type: object
+                  properties:
+                    method:
+                      type: string
+                      default: klay_accountCreated
+                    params:
+                      example: [ "0xa4f42d4d2a3a13874406435500950c9bf2d783db", "latest" ]
+
+      responses:
+        200:
+          description: The existence of an input address
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "../common.yaml#/components/schemas/JsonRpcResponse"
+                  - type: object
+                    properties:
+                      result:
+                        type: boolean
+        default:
+          $ref: "../common.yaml#/components/responses/default"
+      externalDocs:
+        description: |
+          **NOTE:** *In versions earlier than Klaytn v1.7.0, only integer block number, the string "earliest" and "latest" are available.*
+          Klaytn Docs
+        url: https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/account#klay_accountcreated

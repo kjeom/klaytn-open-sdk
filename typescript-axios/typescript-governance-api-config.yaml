@@ -1,0 +1,11 @@
+generatorName: typescript-axios
+outputDir: ./api/governance
+inputSpec: ../api/governance-api.yaml
+templateDir: ./template
+additionalProperties:
+  withInterfaces: false
+  apiPackage: sdk.api
+  modelPackage: sdk.model
+  withSeparateModelsAndApi: true
+  useSingleRequestParameter: false
+  stringEnums: true

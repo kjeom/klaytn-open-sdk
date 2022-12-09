@@ -30,8 +30,22 @@ $ brew install nvm
 $ nvm use v16.13.1
 ```
 
-### test
+### Test
 ```shell
 $ cd typescript-axios
 $ yarn test
+```
+
+## Show config help 
+```shell
+bin/openapi-generator-cli config-help -g typescript-axios
+```
+
+## Make a customized code generator
+- Directory : klaytn-generator
+- Read the klaytn-gernator/README.md
+- Build generator cli jar
+```shell
+$ cd klaytn-generator
+$ ./gradlew clean :typescript-axios:deployJar 
 ```

@@ -353,3 +353,9 @@ MigrationBackup/
 .idea
 
 **/*.jar
+
+# generated openapi
+typescript-axios/openapi
+
+# jar
+bin/**.jar

@@ -65,6 +65,7 @@
 - [ ]  API
 - [ ]  Client
 - [ ]  RPC call
+- [ ]  Model
 
 ## SDK 지원 언어는?
 
@@ -85,10 +86,13 @@
 - [ ]  account
 - [ ]  transaction
 - [ ]  keystore
+- [ ]  klaytn specific feature
+- [ ]  ethereum specific feature
 
 ## 테스트 코드 작성 규칙은 어떻게 할까?
 
 - [ ]  coverage
+- [ ]  BDD
 - [ ]  API 추가/변경시에 함께 코딩을 해야 한다
 
 ## 문서 관리는 어떻게 할까?
@@ -98,6 +102,61 @@
 - [ ]  SDK 언어별 사용 예제
 - [ ]  Online API Server 구성
 
+## Does it need to customize the mustache template?
+
+- [ ]  Copy all template files of the specific language and library
+- [ ]  Patch a snippet codes
+
 ## Generators List
 
 [https://openapi-generator.tech/docs/generators/](https://openapi-generator.tech/docs/generators/)
+
+# TODO
+
+### Klaytn API 모두 정의해 보기
+
+### OpenAPI로 만들 수 없는 API들을 정리하기
+
+### 다양한 언어와 라이브러리로 API를 개발하기
+
+### 모든 API들에 대한 Test Case 리스팅하고, BDD 방식으로 구현은 생략한 요구사항 skeleton을 만들어 보기
+
+### 뉴비 온보딩 프로그램 제안
+
+- [ ]  가장 잘하는 언어로  SDK 만들어 보기
+- [ ]  만들어 놓은 모든 API들의 Test Case 시나리오를 제시해 주고, API가 잘 동작하는지 테스트케이스를 만들기
+- [ ]  새로운 Klaytn API를 정의하고 SDK에 추가하고 테스트 해보기
+
+# References
+
+### OpenAPI
+
+OpenAPI Getting started : [github.io](https://oai.github.io/Documentation/start-here.html)
+
+OpenAPI specification : [github.io](https://oai.github.io/Documentation/specification.html)
+
+OpenAPI 3.1.0 specification : [github](https://github.com/OAI/OpenAPI-Specification/blob/3.1.0/versions/3.1.0.md#pathsObject)
+
+OpenAPI generator : [github](https://github.com/OpenAPITools/openapi-generator)
+
+### Mustache
+
+Mustache Manual : [github.io](https://mustache.github.io/mustache.5.html)
+
+Mustache Template : [medium](https://github.com/samskivert/jmustache)
+
+Mustache turorial : [tsmean](https://www.tsmean.com/articles/mustache/the-ultimate-mustache-tutorial/)
+
+JMustache : [github](https://github.com/samskivert/jmustache)
+
+### Swagger
+
+Swagger specification : [swagger](https://swagger.io/specification/#oas-version)
+
+Swagger codegen : [github](https://github.com/swagger-api/swagger-codegen)
+
+Swagger editor : [editor](https://editor.swagger.io/)
+
+Swagger codegen handlebar : [notes](https://sites.google.com/site/bingsite/web-development/java-goodies/template-engine/handlebar-mustache?pli=1)
+
+JSON-RPC specification : [specification](https://www.jsonrpc.org/specification)

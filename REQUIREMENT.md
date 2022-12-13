@@ -12,17 +12,17 @@
 
 - [x]  JSONRPC : id, method, jsonrpc, params
 - [ ]  REST API :
-    - [ ]  method : getRewards()
-    - [ ]  params : blockNumber Integer
+   - [ ]  method : getRewards()
+   - [ ]  params : blockNumber Integer
 
 ## Do params use by array in jsonrpc 2.0 request?
 
 - [ ]  Array를 인자로 받아서 사용할 것인가?
-    - [ ]  use the getRewards(params Array[Integer])
+   - [ ]  use the getRewards(params Array[Integer])
 - [ ]  단일 파라미터를 선언해서 인자로 받고 Array로 변환 할 것인가?
-    - [ ]  use the getRewards(num Integer)
-    - [ ]  send the array params: [integer]
-    
+   - [ ]  use the getRewards(num Integer)
+   - [ ]  send the array params: [integer]
+
 
 ## Do id increase in jsonrpc 2.0 request?
 
@@ -41,10 +41,10 @@
 
 - [ ]  usage : getRewards(blockNumber Integer)
 - [ ]  rpc call
-    - [ ]  id : auto increment
-    - [ ]  method : set to klay_getRewards automatically
-    - [ ]  jsonrpc : 2.0
-    - [ ]  params : array of integer, [ blockNumber ]
+   - [ ]  id : auto increment
+   - [ ]  method : set to klay_getRewards automatically
+   - [ ]  jsonrpc : 2.0
+   - [ ]  params : array of integer, [ blockNumber ]
 
 ## caver-java 구조를 재사용할까?
 
@@ -111,15 +111,33 @@
 
 [https://openapi-generator.tech/docs/generators/](https://openapi-generator.tech/docs/generators/)
 
+### OpenAPI 문서를 볼 수 있는 공개된 페이지 제공을 위해 서버를 구성해야 하나?
+
+- [ ]  서버 운영
+- [x]  github books 이용
+
+### 버전 관리는 yaml 파일 안에서 할까?
+
+- [x]  같은 yaml 파일에서 버전 분기
+- [ ]  새로운 yaml 파일 만들고 전체 복사하기
+
 # TODO
 
 ### Klaytn API 모두 정의해 보기
 
+- [ ]  To list
+
 ### OpenAPI로 만들 수 없는 API들을 정리하기
+
+- [ ]  To list
 
 ### 다양한 언어와 라이브러리로 API를 개발하기
 
+- [ ]  To List
+
 ### 모든 API들에 대한 Test Case 리스팅하고, BDD 방식으로 구현은 생략한 요구사항 skeleton을 만들어 보기
+
+- [ ]  To List
 
 ### 뉴비 온보딩 프로그램 제안
 

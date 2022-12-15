@@ -1,0 +1,407 @@
+openapi: 3.0.2
+info:
+  title: KLAYTN OPEN API
+  version: 1.10.0
+  contact:
+    name: API support
+    url: https://forum.klaytn.foundation/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: Klay
+  - name: Account
+  - name: Governance
+  - name: Eth
+  - name: RewardSpec
+    x-displayName: Reward Spec Model
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+x-tagGroups:
+  - name: Klay
+    tags:
+      - Klay
+      - Account
+  - name: Models
+    tags:
+      - RewardSpec
+servers:
+  - url: http://localhost:7151
+  - url: https://api.baobab.klaytn.net:8651
+  - url: https://public-en-cypress.klaytn.net
+paths:
+  /klay/getRewards:
+    post:
+      tags:
+        - Klay
+      operationId: getRewards
+      summary: getRewards - Find distributed block rewards
+      description: |
+        Returns distributed block rewards information at the latest block number
+
+        **JSONRPC:** `klay_getRewards`
+      parameters:
+        - name: blockNumberOrTag
+          schema:
+            oneOf:
+              - type: integer
+                format: BN | BigNumber
+              - type: string
+                enum:
+                  - latest
+                  - pending
+                  - earliest
+            readOnly: true
+          description: |
+            blockNumber is the block number
+            blockTag is the string "latest", "earliest" or "pending"
+          in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/JsonRpcRequest'
+                - type: object
+                  properties:
+                    method:
+                      type: string
+                      default: klay_getRewards
+                    params:
+                      example:
+                        - latest
+      responses:
+        '200':
+          description: |
+            block rewards information <br/>
+            Link <br/>
+            <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JsonRpcResponse'
+                  - $ref: '#/components/schemas/RewardSpecResult'
+          links:
+            GetUserByUserId:
+              $ref: '#/components/links/GetUserByUserId'
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+      x-codeSamples:
+        - lang: typescript
+          label: Typescript
+          source: |
+            import {Configuration, KlayApi} from "../../openapi/klay";
+
+            const configuration = new Configuration({
+                basePath: 'http://localhost:7151',
+            });
+
+            const api = new KlayApi(configuration);
+
+            describe('Klay getRewards API', () => {
+                test('should return info of a block number', async () => {
+                    const response = await api.getRewards(1);
+                    expect(response.data.jsonrpc).toBe("2.0")
+                });
+            });
+components:
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required:
+        - method
+        - id
+        - jsonrpc
+      properties:
+        method:
+          type: string
+          description: Method name
+        id:
+          type: integer
+          default: 1
+          format: int32
+          description: Request ID
+        jsonrpc:
+          type: string
+          default: '2.0'
+          description: JSON-RPC Version (2.0)
+        params:
+          type: array
+          items: {}
+    ParseError:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Parse error
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32700
+              description: invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Invalid Request
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32600
+              description: The JSON sent is not a valid Request object.
+    MethodNotFound:
+      title: MethodNotFound
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Method not found
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32601
+              description: The method does not exist / is not available.
+    InvalidParams:
+      title: InvalidParams
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Invalid params
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32602
+              description: Invalid method parameter(s).
+    InternalError:
+      title: InternalError
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Internal error
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32603
+              description: Internal JSON-RPC error.
+    ServerError:
+      title: ServerError
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        error:
+          type: object
+          title: ErrorMember
+          required:
+            - code
+          properties:
+            message:
+              type: string
+              default: Server error
+            data:
+              type: string
+            code:
+              type: integer
+              format: int32
+              default: -32000
+              description: '-32000 to -32099 </br> Reserved for implementation-defined server-errors.'
+    JsonRpcResponse:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - result
+      properties:
+        jsonrpc:
+          type: string
+          default: '2.0'
+        id:
+          type: integer
+          format: int64
+        result: {}
+    RewardSpec:
+      title: RewardSpec
+      description: |
+        Haha
+        <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+      type: object
+      required:
+        - burnFee
+        - kfg
+        - kir
+        - minted
+        - proposer
+        - rewords
+        - stakers
+        - totalFee
+      properties:
+        burnFee:
+          type: integer
+          format: int64
+          description: the amount burnt
+        kgf:
+          type: integer
+          format: int64
+          description: the amount allocated to KGF
+        kir:
+          type: integer
+          format: int64
+          description: the amount allocated to KIR
+        minted:
+          type: integer
+          format: int64
+          description: the amount newly minted
+          example: 9600000000000000000
+        proposer:
+          type: integer
+          format: int64
+          description: the amount allocated to the block proposer
+          example: 9600000000000000000
+        rewords:
+          type: object
+          description: mapping from reward recipient to amounts
+          properties:
+            address:
+              type: string
+          required:
+            - address
+          additionalProperties:
+            type: integer
+          example:
+            '1.0278187497989767e+48': 9600000000000000000
+        stakers:
+          type: integer
+          format: int64
+          description: total amount allocated to stakers
+        totalFee:
+          type: integer
+          format: int64
+          description: total tx fee spent
+    RewardSpecResult:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/RewardSpec'
+  responses:
+    DefaultErrorResponse:
+      description: Error Response
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/ParseError'
+              - $ref: '#/components/schemas/InvalidRequest'
+              - $ref: '#/components/schemas/MethodNotFound'
+              - $ref: '#/components/schemas/InvalidParams'
+              - $ref: '#/components/schemas/InternalError'
+              - $ref: '#/components/schemas/ServerError'
+  links:
+    GetUserByUserId:
+      description: |
+        The `id` value returned in the response can be used as the `userId` parameter in `GET /users/{userId}`.
+      operationId: getUser
+      parameters:
+        userId: $response.body#/id

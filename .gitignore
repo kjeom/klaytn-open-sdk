@@ -359,3 +359,6 @@ typescript-axios/openapi
 
 # jar
 bin/**.jar
+
+# Visual studio code
+.vscode

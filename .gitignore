@@ -352,13 +352,18 @@ MigrationBackup/
 # intellij
 .idea
 
-**/*.jar
-
 # generated openapi
 typescript-axios/openapi
 
 # jar
 bin/**.jar
+**/*.jar
+**/.gradle
 
 # Visual studio code
 .vscode
+
+# Yarn
+**/yarn-error.log
+**/yarn.lock
+

@@ -2,7 +2,7 @@ import {
     AccountCreatedBlockNumberOrHashParameterOneOf,
     Configuration,
     KlayAccountApi,
-} from "../openapi/klay-account";
+} from "../../../openapi/klay-account";
 
 const configuration = new Configuration({
     basePath: 'http://localhost:7151',

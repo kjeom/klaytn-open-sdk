@@ -1,6 +1,6 @@
-generatorName: typescript-axios
-outputDir: ./openapi/klay-account
-inputSpec: ../api/klay.account-api.yaml
+generatorName: klaytn-typescript-axios
+outputDir: ./openapi/klay
+inputSpec: ../api/klay-api.yaml
 templateDir: ./template
 additionalProperties:
   withInterfaces: false

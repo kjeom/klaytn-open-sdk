@@ -49,3 +49,9 @@ bin/openapi-generator-cli config-help -g typescript-axios
 $ cd klaytn-generator
 $ ./gradlew clean :typescript-axios:deployJar 
 ```
+
+## Document
+### redocly site
+[redoc style site](https://henry-will.github.io/klaytn-open-sdk/site)
+### Swagger UI
+[swagger ui for api test](https://henry-will.github.io/klaytn-open-sdk/site/SwaggerUI/)

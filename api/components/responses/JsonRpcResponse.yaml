@@ -1,0 +1,19 @@
+openapi: "3.0.2"
+info:
+paths:
+components:
+  schemas:
+    JsonRpcResponse:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - result
+      properties:
+        jsonrpc:
+          type: string
+          default: "2.0"
+        id:
+          type: integer
+          format: int64
+        result: { }

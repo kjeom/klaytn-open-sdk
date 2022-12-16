@@ -34,8 +34,9 @@ paths:
     post:
       tags:
         - Klay
+        - Reward
       operationId: getRewards
-      summary: getRewards - Find distributed block rewards
+      summary: '[getRewards] Find distributed block rewards'
       description: |
         Returns distributed block rewards information at the latest block number
 
@@ -82,9 +83,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/JsonRpcResponse'
                   - $ref: '#/components/schemas/RewardSpecResult'
-          links:
-            GetUserByUserId:
-              $ref: '#/components/links/GetUserByUserId'
         default:
           $ref: '#/components/responses/DefaultErrorResponse'
       x-codeSamples:
@@ -105,6 +103,128 @@ paths:
                     expect(response.data.jsonrpc).toBe("2.0")
                 });
             });
+        - lang: curl
+          label: Curl
+          source: |
+            curl -X 'POST' \
+              'https://api.baobab.klaytn.net:8651/klay/getRewards' \
+              -H 'accept: application/json' \
+              -H 'Content-Type: application/json' \
+              -d '{
+              "method": "klay_getRewards",
+              "id": 1,
+              "jsonrpc": "2.0",
+              "params": [
+                "latest"
+              ]
+            }'
+  /klay/account/accountCreated:
+    post:
+      operationId: accountCreated
+      summary: '[accountCreated] Find if input address was created'
+      description: |
+        Returns `true` if the account associated with the address is created. It returns `false` otherwise.
+
+        **JSONRPC:** `klay_accountCreated`
+      tags:
+        - Klay
+        - Account
+      parameters:
+        - name: address
+          schema:
+            type: string
+            format: 20-byte DATA
+            readOnly: true
+          description: Address
+          in: header
+        - name: blockNumberOrHash
+          schema:
+            oneOf:
+              - type: integer
+                format: BN | BigNumber
+              - type: string
+                enum:
+                  - latest
+                  - pending
+                  - earliest
+                  - genesis
+            readOnly: true
+          description: |
+            Integer or hexadecimal block number, or the string `earliest`, `latest` or `pending` as in the [default block parameter](https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/block#the-default-block-parameter), or block hash.
+          in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/JsonRpcRequest'
+                - type: object
+                  properties:
+                    method:
+                      type: string
+                      default: klay_accountCreated
+                    params:
+                      example:
+                        - '0xa4f42d4d2a3a13874406435500950c9bf2d783db'
+                        - latest
+      responses:
+        '200':
+          description: The existence of an input address
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JsonRpcResponse'
+                  - type: object
+                    properties:
+                      result:
+                        type: boolean
+        default:
+          $ref: '#/components/responses/DefaultErrorResponse'
+      externalDocs:
+        description: |
+          **NOTE:** *In versions earlier than Klaytn v1.7.0, only integer block number, the string "earliest" and "latest" are available.*
+          Klaytn Docs
+        url: https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/account#klay_accountcreated
+      x-codeSamples:
+        - lang: typescript
+          label: Typescript
+          source: |
+            import {
+                AccountCreatedBlockNumberOrHashParameterOneOf,
+                Configuration,
+                KlayAccountApi,
+            } from "../../../openapi/klay-account";
+
+            const configuration = new Configuration({
+                basePath: 'http://localhost:7151',
+            });
+
+            const api = new KlayAccountApi(configuration);
+
+            describe('testing index file', () => {
+                test('empty string should result in zero', async () => {
+                    const receipt = await api.accountCreated(
+                        "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
+                        AccountCreatedBlockNumberOrHashParameterOneOf.Latest
+                    );
+                    console.log(receipt.data);
+                })
+            });
+        - lang: curl
+          label: Curl
+          source: |
+            curl -X 'POST' \
+              'http://localhost:7151/klay/accountCreated' \
+              -H 'accept: application/json' \
+              -H 'Content-Type: application/json' \
+              -d '{
+              "method": "klay_accountCreated",
+              "params": [
+                "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
+                "latest"
+              ]
+            }'
 components:
   schemas:
     JsonRpcRequest:
@@ -398,10 +518,3 @@ components:
               - $ref: '#/components/schemas/InvalidParams'
               - $ref: '#/components/schemas/InternalError'
               - $ref: '#/components/schemas/ServerError'
-  links:
-    GetUserByUserId:
-      description: |
-        The `id` value returned in the response can be used as the `userId` parameter in `GET /users/{userId}`.
-      operationId: getUser
-      parameters:
-        userId: $response.body#/id

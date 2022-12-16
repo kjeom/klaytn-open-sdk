@@ -1,4 +1,4 @@
-import {Configuration, KlayApi} from "../../openapi/klay";
+import {Configuration, KlayApi} from "../../openapi";
 
 const configuration = new Configuration({
     basePath: 'http://localhost:7151',

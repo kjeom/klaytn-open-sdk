@@ -9,18 +9,15 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 tags:
-  - name: Klay
-  - name: Account
-  - name: Governance
-  - name: Eth
-  - name: RewardSpec
-    description: |
-      <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+  - name: klay
+  - name: account
+  - name: governance
+  - name: eth
 x-tagGroups:
   - name: Klay
     tags:
-      - Klay
-      - Account
+      - klay
+      - klay.account
   - name: Models
     tags:
       - RewardSpec
@@ -32,8 +29,7 @@ paths:
   /klay/getRewards:
     post:
       tags:
-        - Klay
-        - Reward
+        - klay
       operationId: getRewards
       summary: '[getRewards] Find distributed block rewards'
       description: |
@@ -88,7 +84,7 @@ paths:
         - lang: typescript
           label: Typescript
           source: |
-            import {Configuration, KlayApi} from "../../openapi/klay";
+            import {Configuration, KlayApi} from "../../openapi";
 
             const configuration = new Configuration({
                 basePath: 'http://localhost:7151',
@@ -128,8 +124,7 @@ paths:
 
         **NOTE:** *In versions earlier than Klaytn v1.7.0, only integer block number, the string "earliest" and "latest" are available.*
       tags:
-        - Klay
-        - Account
+        - klay.account
       parameters:
         - name: address
           schema:
@@ -193,7 +188,7 @@ paths:
                 AccountCreatedBlockNumberOrHashParameterOneOf,
                 Configuration,
                 KlayAccountApi,
-            } from "../../../openapi/klay-account";
+            } from "../../../openapi";
 
             const configuration = new Configuration({
                 basePath: 'http://localhost:7151',

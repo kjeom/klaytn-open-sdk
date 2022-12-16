@@ -21,8 +21,7 @@ paths:
         
         **NOTE:** *In versions earlier than Klaytn v1.7.0, only integer block number, the string "earliest" and "latest" are available.*
       tags:
-        - Klay
-        - Account
+        - klay.account
       parameters:
         - name: address
           schema:
@@ -76,7 +75,7 @@ paths:
         - lang: 'typescript'
           label: 'Typescript'
           source:
-            $ref: "../../../typescript-axios/test/klay/account/accountCreated.test.ts"
+            $ref: "../../../sdk/typescript-axios/test/klay/account/accountCreated.test.ts"
         - lang: 'curl'
           label: 'Curl'
           source:

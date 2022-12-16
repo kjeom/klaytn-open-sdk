@@ -13,8 +13,7 @@ paths:
   /klay/getRewards:
     post:
       tags:
-        - Klay
-        - Reward
+        - klay
       operationId: getRewards
       summary: "[getRewards] Find distributed block rewards"
       description: |
@@ -66,7 +65,7 @@ paths:
         - lang: 'typescript'
           label: 'Typescript'
           source:
-            $ref: "../../../typescript-axios/test/klay/getRewards.test.ts"
+            $ref: "../../../sdk/typescript-axios/test/klay/getRewards.test.ts"
         - lang: 'curl'
           label: 'Curl'
           source:

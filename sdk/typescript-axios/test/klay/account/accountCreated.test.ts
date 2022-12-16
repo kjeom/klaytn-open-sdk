@@ -2,7 +2,7 @@ import {
     AccountCreatedBlockNumberOrHashParameterOneOf,
     Configuration,
     KlayAccountApi,
-} from "../../../openapi/klay-account";
+} from "../../../openapi";
 
 const configuration = new Configuration({
     basePath: 'http://localhost:7151',
@@ -10,12 +10,12 @@ const configuration = new Configuration({
 
 const api = new KlayAccountApi(configuration);
 
-describe('testing index file', () => {
-    test('empty string should result in zero', async () => {
-        const receipt = await api.accountCreated(
+describe('accountCreated', () => {
+    test('should return false', async () => {
+        const response = await api.accountCreated(
             "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
             AccountCreatedBlockNumberOrHashParameterOneOf.Latest
         );
-        console.log(receipt.data);
+        expect(response.data.result).toBe(false);
     })
 });

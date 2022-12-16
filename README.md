@@ -8,8 +8,8 @@ $ sh install-generator.sh
 
 ## Generate typescript with axios library 
 ```shell
-$ cd typescript-axios
-$ sh generate-typescript.sh
+$ cd sdk/typescript-axios
+$ sh typescript-generate.sh
 ```
 
 ## Add API
@@ -19,8 +19,8 @@ $ sh generate-typescript.sh
     - eth
     - etc 
 1. Add paths
-    - choose directory like /klay/getRewards, it's up to you which making a new file or using an existed file
-      - ./api/klay/rewards.yaml
+    - choose directory like api/paths/klay, it's up to you which making a new file or using an existed file
+      - api/paths/klay/rewards.yaml
     - add REST API paths like /klay/getRewards, it's not a real path in json rpc. It's for a syntactic path, this uri path is not used in json rpc call.
 
 ## Setting the typescript-axios
@@ -32,7 +32,7 @@ $ nvm use v16.13.1
 
 ### Test
 ```shell
-$ cd typescript-axios
+$ cd sdk/typescript-axios
 $ yarn test
 ```
 

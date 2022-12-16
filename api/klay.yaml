@@ -9,18 +9,18 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 tags:
-  - name: Klay
-  - name: Account
-  - name: Governance
-  - name: Eth
-  - name: RewardSpec
-    description: |
-      <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+  - name: klay
+  - name: account
+  - name: governance
+  - name: eth
+#  - name: RewardSpec
+#    description: |
+#      <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
 x-tagGroups:
   - name: Klay
     tags:
-      - Klay
-      - Account
+      - klay
+      - klay.account
   - name: Models
     tags:
       - RewardSpec

@@ -52,6 +52,6 @@ $ ./gradlew clean :typescript-axios:deployJar
 
 ## Document
 ### redocly site
-[redoc style site](hhttps://henry-will.github.io/klaytn-open-sdk/)
+[redoc style site](https://henry-will.github.io/klaytn-open-sdk/)
 ### Swagger UI
 [swagger ui for api test](https://henry-will.github.io/klaytn-open-sdk/SwaggerUI/)

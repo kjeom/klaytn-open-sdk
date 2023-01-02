@@ -1,6 +1,5 @@
 import {
-    AccountCreatedBlockNumberOrHashParameterOneOf,
-    Configuration,
+    Configuration, GetRewardsBlockNumberOrTagParameter,
     KlayAccountApi,
 } from "../../../openapi";
 
@@ -14,7 +13,7 @@ describe('accountCreated', () => {
     test('should return false', async () => {
         const response = await api.accountCreated(
             "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
-            AccountCreatedBlockNumberOrHashParameterOneOf.Latest
+            "latest"
         );
         expect(response.data.result).toBe(false);
     })

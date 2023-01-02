@@ -1,6 +1,6 @@
 generatorName: typescript-axios
 outputDir: ./openapi
-inputSpec: ../../site/klaytn-openapi.yaml
+inputSpec: ../../../site/klaytn-openapi.yaml
 templateDir: ./template
 additionalProperties:
   withInterfaces: false

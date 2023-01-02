@@ -35,12 +35,12 @@ import { {{classname}} } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
 // @ts-ignore
 import { {{dataType}}Instance } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
                 {{/bodyParam}}
-                {{#headerParams}}
+                {{#queryParams}}
                     {{#isModel}}
 // @ts-ignore
 import { {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
                     {{/isModel}}
-                {{/headerParams}}
+                {{/queryParams}}
             {{/useSingleRequestParameter}}
         {{/operation}}
     {{/withInterfaces}}
@@ -383,11 +383,11 @@ export class {{classname}} extends BaseAPI {
     }
     {{/useSingleRequestParameter}}
     {{^useSingleRequestParameter}}
-    public {{nickname}}({{#headerParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/headerParams}}options?: AxiosRequestConfig) {
+    public {{nickname}}({{#allParams}}{{#isQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/isQueryParam}}{{/allParams}}options?: AxiosRequestConfig) {
         {{#bodyParam}}
         const {{paramName}} = {{dataType}}Instance( {
             id: 1,
-            params: [{{#headerParams}}{{paramName}}{{^-last}},{{/-last}}{{/headerParams}}]
+            params: [{{#queryParams}}{{paramName}}{{^-last}},{{/-last}}{{/queryParams}}]
         })
         {{/bodyParam}}
         return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options).then((request) => request(this.axios, this.basePath));

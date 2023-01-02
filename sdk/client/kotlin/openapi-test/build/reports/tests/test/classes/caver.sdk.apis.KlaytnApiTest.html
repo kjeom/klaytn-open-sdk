@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.290s</div>
+<div class="counter">0.332s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,27 +82,27 @@
 </thead>
 <tr>
 <td class="success">Then: Big.Int cast Demical</td>
-<td class="success">0.024s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Then: Get getRewards by number</td>
-<td class="success">0.033s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">Then: return null</td>
 <td class="success">0.026s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">Then: return rewards info</td>
-<td class="success">0.186s</td>
+<td class="success">Then: Get getRewards by number</td>
+<td class="success">0.031s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Then: return null</td>
+<td class="success">0.107s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Then: return rewards info</td>
-<td class="success">0.021s</td>
+<td class="success">0.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Then: return rewards info</td>
+<td class="success">0.152s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -111,7 +111,7 @@
 <h2>Standard output</h2>
 <span class="code">
 <pre>9600000000000000000
-GetRewardsRequest(method=klay_getRewards, id=1, jsonrpc=2.0, params=[I@1c99ec32)
+GetRewardsRequest(method=klay_getRewards, id=1, jsonrpc=2.0, params=[I@6280ad44)
 WARN: Duplicated test name Call getRewards. To disable this message, set DuplicateTestNameMode to Silent.
 </pre>
 </span>
@@ -119,112 +119,112 @@ WARN: Duplicated test name Call getRewards. To disable this message, set Duplica
 <div id="tab2" class="tab">
 <h2>Standard error</h2>
 <span class="code">
-<pre>Dec 30, 2022 8:00:58 PM okhttp3.internal.platform.Platform log
+<pre>Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; POST http://localhost:7151/klay/getRewards
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json; charset=UTF-8
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 64
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;method&quot;:&quot;klay_getRewards&quot;,&quot;id&quot;:1,&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;params&quot;:[1]}
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; END POST (64-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
-INFO: &lt;-- 200 OK http://localhost:7151/klay/getRewards (48ms)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
+INFO: &lt;-- 200 OK http://localhost:7151/klay/getRewards (33ms)
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Server: fasthttp
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
-INFO: Date: Fri, 30 Dec 2022 11:00:58 GMT
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
+INFO: Date: Mon, 02 Jan 2023 04:12:52 GMT
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 227
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Vary: Origin
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;result&quot;:{&quot;minted&quot;:9600000000000000000,&quot;totalFee&quot;:0,&quot;burntFee&quot;:0,&quot;proposer&quot;:9600000000000000000,&quot;stakers&quot;:0,&quot;kgf&quot;:0,&quot;kir&quot;:0,&quot;rewards&quot;:{&quot;0xb408fc9b2512284823264aceeb50d2970533b4ff&quot;:9600000000000000000}}}
 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: &lt;-- END HTTP (227-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; POST http://localhost:7151/klay/getRewards
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json; charset=UTF-8
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 68
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;method&quot;:&quot;klay_getRewards&quot;,&quot;id&quot;:1,&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;params&quot;:[1,2,4]}
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; END POST (68-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: &lt;-- 200 OK http://localhost:7151/klay/getRewards (1ms)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Server: fasthttp
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
-INFO: Date: Fri, 30 Dec 2022 11:00:58 GMT
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
+INFO: Date: Mon, 02 Jan 2023 04:12:52 GMT
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 96
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Vary: Origin
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;error&quot;:{&quot;code&quot;:-32602,&quot;message&quot;:&quot;too many arguments, want at most 1&quot;}}
 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: &lt;-- END HTTP (96-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; POST http://localhost2:7151/klay/getRewards
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json; charset=UTF-8
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 64
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;method&quot;:&quot;klay_getRewards&quot;,&quot;id&quot;:1,&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;params&quot;:[1]}
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; END POST (64-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: &lt;-- HTTP FAILED: java.net.UnknownHostException: localhost2: nodename nor servname provided, or not known
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; POST http://localhost:7151/klay/getRewards
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json; charset=UTF-8
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 64
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;method&quot;:&quot;klay_getRewards&quot;,&quot;id&quot;:0,&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;params&quot;:[1]}
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: --&gt; END POST (64-byte body)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
-INFO: &lt;-- 200 OK http://localhost:7151/klay/getRewards (4ms)
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
+INFO: &lt;-- 200 OK http://localhost:7151/klay/getRewards (2ms)
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Server: fasthttp
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
-INFO: Date: Fri, 30 Dec 2022 11:00:58 GMT
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
+INFO: Date: Mon, 02 Jan 2023 04:12:53 GMT
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Type: application/json
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Content-Length: 227
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: Vary: Origin
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;result&quot;:{&quot;minted&quot;:9600000000000000000,&quot;totalFee&quot;:0,&quot;burntFee&quot;:0,&quot;proposer&quot;:9600000000000000000,&quot;stakers&quot;:0,&quot;kgf&quot;:0,&quot;kir&quot;:0,&quot;rewards&quot;:{&quot;0xb408fc9b2512284823264aceeb50d2970533b4ff&quot;:9600000000000000000}}}
 
-Dec 30, 2022 8:00:59 PM okhttp3.internal.platform.Platform log
+Jan 02, 2023 1:12:53 PM okhttp3.internal.platform.Platform log
 INFO: &lt;-- END HTTP (227-byte body)
 </pre>
 </span>
@@ -237,7 +237,7 @@ INFO: &lt;-- END HTTP (227-byte body)
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.4</a> at Dec 30, 2022, 8:00:59 PM</p>
+<a href="http://www.gradle.org">Gradle 7.4</a> at Jan 2, 2023, 1:12:53 PM</p>
 </div>
 </div>
 </body>

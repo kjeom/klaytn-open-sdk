@@ -359,6 +359,7 @@ MigrationBackup/
 bin/**.jar
 **/*.jar
 **/.gradle
+**/build
 
 # Visual studio code
 .vscode

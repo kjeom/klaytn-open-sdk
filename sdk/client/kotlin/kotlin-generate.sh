@@ -12,7 +12,7 @@ cd "${CURRENT_FILE_DIR}"
 rm -rf "${CURRENT_FILE_DIR}/openapi"
 mkdir "${CURRENT_FILE_DIR}/openapi"
 cp .openapi-generator-ignore "${CURRENT_FILE_DIR}/openapi"
-"${PROJECT_DIR}"/bin/caver-openapi-generator-cli generate -c "${CURRENT_FILE_DIR}/kotlin-config.yaml" --inline-schema-name-mappings meta_200_response=MetaObject
+"${PROJECT_DIR}"/bin/caver-openapi-generator-cli generate -c "${CURRENT_FILE_DIR}/kotlin-config.yaml"
 
 # generate openapi jar library
 cd "${CURRENT_FILE_DIR}/openapi"

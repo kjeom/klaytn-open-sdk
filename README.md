@@ -6,12 +6,6 @@ $ cd bin
 $ sh install-generator.sh
 ```
 
-## Generate typescript with axios library 
-```shell
-$ cd sdk/typescript-axios
-$ sh typescript-generate.sh
-```
-
 ## Add API
 1. Choose an API tag(group)
     - klay
@@ -23,31 +17,20 @@ $ sh typescript-generate.sh
       - api/paths/klay/rewards.yaml
     - add REST API paths like /klay/getRewards, it's not a real path in json rpc. It's for a syntactic path, this uri path is not used in json rpc call.
 
-## Setting the typescript-axios
+## Setting Node 
 - Use node version more than v12
 ```shell
 $ brew install nvm
 $ nvm use v16.13.1
 ```
 
-### Test
-```shell
-$ cd sdk/typescript-axios
-$ yarn test
-```
+## Generate caver-openapi-generator-cli library
+- Read [README.md](./codegen/README.md)
+
 
 ## Show config help 
 ```shell
-bin/openapi-generator-cli config-help -g typescript-axios
-```
-
-## Make a customized code generator
-- Directory : klaytn-generator
-- Read the klaytn-gernator/README.md
-- Build generator cli jar
-```shell
-$ cd klaytn-generator
-$ ./gradlew clean :typescript-axios:deployJar 
+bin/caver-openapi-generator-cli config-help -g typescript-axios
 ```
 
 ## Document

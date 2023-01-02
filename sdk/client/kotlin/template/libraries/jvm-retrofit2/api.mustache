@@ -1,10 +1,7 @@
 package {{apiPackage}}
 
 import {{packageName}}.infrastructure.CollectionFormats.*
-import {{packageName}}.infrastructure.RequestBodyParams
-import {{packageName}}.infrastructure.result
 import retrofit2.http.*
-import retrofit2.Retrofit
 {{#doNotUseRxAndCoroutines}}
 import retrofit2.Call
 {{/doNotUseRxAndCoroutines}}
@@ -13,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Response
 {{/useCoroutines}}
 {{/doNotUseRxAndCoroutines}}
-{{! import okhttp3.RequestBody }}
+import okhttp3.RequestBody
 {{#isResponseFile}}
 import okhttp3.ResponseBody
 {{/isResponseFile}}
@@ -41,8 +38,8 @@ import io.reactivex.rxjava3.core.Completable
 {{/doNotUseRxAndCoroutines}}
 {{^multiplatform}}
     {{#gson}}
-    {{! import com.google.gson.annotations.SerializedName }}
-    {{/gson}}
+import com.google.gson.annotations.SerializedName
+{{/gson}}
     {{#moshi}}
 import com.squareup.moshi.Json
 {{/moshi}}
@@ -140,7 +137,7 @@ interface {{classname}} {
      * {{notes}}
      * Responses:{{#responses}}
      *  - {{code}}: {{{message}}}{{/responses}}
-     *{{>bodyParamJavadoc}}
+     *{{>paramJavadoc}}
      * @return {{^useCoroutines}}[Call]<{{/useCoroutines}}{{#isResponseFile}}[ResponseBody]{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}[{{{.}}}]{{/returnType}}{{^returnType}}[Unit]{{/returnType}}{{/isResponseFile}}{{^useCoroutines}}>{{/useCoroutines}}
      */
     {{#isDeprecated}}
@@ -161,45 +158,8 @@ interface {{classname}} {
             {{/prioritizedContentTypes}}
         {{/formParams}}
     @{{httpMethod}}("{{{path}}}")
-    {{^doNotUseRxAndCoroutines}}{{#useCoroutines}}suspend {{/useCoroutines}}{{/doNotUseRxAndCoroutines}}fun {{operationId}}({{^allParams}}){{/allParams}}{{#allParams}}{{>bodyParams}}{{#-last}}){{/-last}}{{/allParams}}: {{^doNotUseRxAndCoroutines}}{{#useRxJava}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/useRxJava}}{{#useRxJava2}}{{#returnType}}Single<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Single<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{#useCoroutines}}Response<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/useCoroutines}}{{/doNotUseRxAndCoroutines}}{{#doNotUseRxAndCoroutines}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/doNotUseRxAndCoroutines}}
+    {{^doNotUseRxAndCoroutines}}{{#useCoroutines}}suspend {{/useCoroutines}}{{/doNotUseRxAndCoroutines}}fun {{operationId}}({{^allParams}}){{/allParams}}{{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}}, {{/-last}}{{#-last}}){{/-last}}{{/allParams}}: {{^doNotUseRxAndCoroutines}}{{#useRxJava}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/useRxJava}}{{#useRxJava2}}{{#returnType}}Single<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Single<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{#useCoroutines}}Response<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/useCoroutines}}{{/doNotUseRxAndCoroutines}}{{#doNotUseRxAndCoroutines}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Unit{{/returnType}}{{/isResponseFile}}>{{/doNotUseRxAndCoroutines}}
 
-    @{{httpMethod}}("{{{path}}}")
-    fun {{operationId}}(@Body body: RequestBodyParams): Call<{{{returnType}}}>
     {{/operation}}
 }
 {{/operations}}
-
-
-class {{classname}}Service() {
-    private lateinit var api: {{classname}}
-
-    {{#operations}}{{#operation}}{{#bodyParam}}
-    private val {{{operationId}}}Method = {{{dataType}}}().method{{/bodyParam}}{{/operation}}{{/operations}}
-
-    constructor(retrofit: Retrofit) : this() {
-        api = retrofit.create({{classname}}::class.java)
-    }
-
-{{#operations}}
-    {{#operation}}
-    fun {{operationId}}({{#queryParams}}{{^composedSchemas}}{{{paramName}}}: {{{dataType}}}{{^required}}? = null{{/required}}{{^last}},{{/last}}{{/composedSchemas}}{{/queryParams}}): {{{returnType}}}? {
-        return api.{{operationId}}(RequestBodyParams(listOf({{#queryParams}}{{^composedSchemas}}{{{paramName}}}{{^last}},{{/last}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method)).result()
-    }
-
-    {{/operation}}
-{{/operations}}
-{{#operations}}
-    {{#operation}}
-        {{#queryParams}}
-            {{#composedSchemas}}
-                {{#oneOf}}
-    fun {{operationId}}({{{title}}}: {{{baseType}}}{{#queryParams}}{{^composedSchemas}}, {{{paramName}}}: {{{dataType}}}{{^required}}? = null{{/required}}{{/composedSchemas}}{{/queryParams}}): {{{returnType}}}? {
-        return api.{{operationId}}(RequestBodyParams(listOf({{{title}}}{{#queryParams}}{{^composedSchemas}}, {{{paramName}}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method)).result()
-    }
-
-                {{/oneOf}}
-            {{/composedSchemas}}
-        {{/queryParams}}
-    {{/operation}}
-{{/operations}}
-}

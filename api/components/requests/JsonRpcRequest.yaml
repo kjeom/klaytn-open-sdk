@@ -16,8 +16,8 @@ components:
         id:
           type: integer
           default: 1
-          format: int32
-          description: Request ID
+          format: int64
+          description: Request ID, Random or Auto incrementation
         jsonrpc:
           type: string
           default: "2.0"

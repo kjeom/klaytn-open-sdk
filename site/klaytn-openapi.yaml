@@ -38,12 +38,16 @@ paths:
         **JSONRPC:** `klay_getRewards`
       parameters:
         - name: blockNumberOrTag
+          required: false
           schema:
             oneOf:
-              - type: integer
-                format: BN | BigNumber
+              - type: number
+                format: double
+                title: blockNumber
+                description: BN | BigNumber
               - type: string
-                enum:
+                title: blockTag
+                example:
                   - latest
                   - pending
                   - earliest
@@ -51,8 +55,12 @@ paths:
           description: |
             blockNumber is the block number
             blockTag is the string "latest", "earliest" or "pending"
-          in: header
+          in: query
       requestBody:
+        required: true
+        description: |
+          blockNumber is the block number
+          blockTag is the string "latest", "earliest" or "pending"
         content:
           application/json:
             schema:
@@ -67,7 +75,7 @@ paths:
                       example:
                         - latest
       responses:
-        '200':
+        default:
           description: |
             block rewards information <br/>
             Link <br/>
@@ -78,8 +86,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/JsonRpcResponse'
                   - $ref: '#/components/schemas/RewardSpecResult'
-        default:
-          $ref: '#/components/responses/DefaultErrorResponse'
       x-codeSamples:
         - lang: typescript
           label: Typescript
@@ -127,27 +133,31 @@ paths:
         - klay.account
       parameters:
         - name: address
+          required: true
           schema:
             type: string
             format: 20-byte DATA
             readOnly: true
           description: Address
-          in: header
-        - name: blockNumberOrHash
+          in: query
+        - name: blockNumber
+          required: true
           schema:
             oneOf:
-              - type: integer
-                format: BN | BigNumber
+              - type: number
+                format: double
+                title: blockNumber
+                description: BN | BigNumber
               - type: string
-                enum:
+                title: blockTag
+                example:
                   - latest
                   - pending
                   - earliest
-                  - genesis
             readOnly: true
           description: |
             Integer or hexadecimal block number, or the string `earliest`, `latest` or `pending` as in the [default block parameter](https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/block#the-default-block-parameter), or block hash.
-          in: header
+          in: query
       requestBody:
         content:
           application/json:
@@ -164,7 +174,7 @@ paths:
                         - '0xa4f42d4d2a3a13874406435500950c9bf2d783db'
                         - latest
       responses:
-        '200':
+        default:
           description: The existence of an input address
           content:
             application/json:
@@ -175,8 +185,6 @@ paths:
                     properties:
                       result:
                         type: boolean
-        default:
-          $ref: '#/components/responses/DefaultErrorResponse'
       externalDocs:
         url: https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/account#klay_accountcreated
         description: Klaytn Docs
@@ -185,8 +193,7 @@ paths:
           label: Typescript
           source: |
             import {
-                AccountCreatedBlockNumberOrHashParameterOneOf,
-                Configuration,
+                Configuration, GetRewardsBlockNumberOrTagParameter,
                 KlayAccountApi,
             } from "../../../openapi";
 
@@ -196,13 +203,108 @@ paths:
 
             const api = new KlayAccountApi(configuration);
 
-            describe('testing index file', () => {
-                test('empty string should result in zero', async () => {
-                    const receipt = await api.accountCreated(
+            describe('accountCreated', () => {
+                test('should return false', async () => {
+                    const response = await api.accountCreated(
                         "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
-                        AccountCreatedBlockNumberOrHashParameterOneOf.Latest
+                        "latest"
                     );
-                    console.log(receipt.data);
+                    expect(response.data.result).toBe(false);
+                })
+            });
+        - lang: curl
+          label: Curl
+          source: |
+            curl -X 'POST' \
+              'http://localhost:7151/klay/accountCreated' \
+              -H 'accept: application/json' \
+              -H 'Content-Type: application/json' \
+              -d '{
+              "method": "klay_accountCreated",
+              "params": [
+                "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
+                "latest"
+              ]
+            }'
+  /klay/account/accountCreated2:
+    post:
+      operationId: accountCreated2
+      summary: '[accountCreated] Find if input address was created'
+      description: |
+        Returns `true` if the account associated with the address is created. It returns `false` otherwise.
+
+        **JSONRPC:** `klay_accountCreated`
+
+        **NOTE:** *In versions earlier than Klaytn v1.7.0, only integer block number, the string "earliest" and "latest" are available.*
+      tags:
+        - klay.account
+      parameters:
+        - name: address
+          schema:
+            type: string
+            format: 20-byte DATA
+            readOnly: true
+          description: Address
+          in: query
+        - name: blockNumber
+          required: true
+          schema:
+            type: number
+            readOnly: true
+          description: Address
+          in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/JsonRpcRequest'
+                - type: object
+                  properties:
+                    method:
+                      type: string
+                      default: klay_accountCreated
+                    params:
+                      example:
+                        - '0xa4f42d4d2a3a13874406435500950c9bf2d783db'
+                        - latest
+      responses:
+        default:
+          description: The existence of an input address
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JsonRpcResponse'
+                  - type: object
+                    properties:
+                      result:
+                        type: boolean
+      externalDocs:
+        url: https://docs.klaytn.foundation/dapp/json-rpc/api-references/klay/account#klay_accountcreated
+        description: Klaytn Docs
+      x-codeSamples:
+        - lang: typescript
+          label: Typescript
+          source: |
+            import {
+                Configuration, GetRewardsBlockNumberOrTagParameter,
+                KlayAccountApi,
+            } from "../../../openapi";
+
+            const configuration = new Configuration({
+                basePath: 'http://localhost:7151',
+            });
+
+            const api = new KlayAccountApi(configuration);
+
+            describe('accountCreated', () => {
+                test('should return false', async () => {
+                    const response = await api.accountCreated(
+                        "0xa4f42d4d2a3a13874406435500950c9bf2d783db",
+                        "latest"
+                    );
+                    expect(response.data.result).toBe(false);
                 })
             });
         - lang: curl
@@ -234,8 +336,8 @@ components:
         id:
           type: integer
           default: 1
-          format: int32
-          description: Request ID
+          format: int64
+          description: Request ID, Random or Auto incrementation
         jsonrpc:
           type: string
           default: '2.0'
@@ -243,191 +345,41 @@ components:
         params:
           type: array
           items: {}
-    ParseError:
+    ErrorMember:
       type: object
+      title: ErrorMember
       required:
-        - jsonrpc
-        - id
-        - error
+        - code
       properties:
-        jsonrpc:
-          type: string
-          default: '2.0'
-        id:
+        code:
           type: integer
           format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Parse error
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32700
-              description: invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      required:
-        - jsonrpc
-        - id
-        - error
-      properties:
-        jsonrpc:
+          example: -32700
+          description: |
+            A Number that indicates the error type that occurred.
+            This MUST be an integer.
+
+            | code | message | description |
+            |-----|-----|-------|
+            | -32700   | Parse error   | invalid JSON was received by the server. \nAn error occurred on the server while parsing the JSON text. |
+            |-32602 | Invalid params | Invalid method parameter(s). |
+        message:
           type: string
-          default: '2.0'
-        id:
-          type: integer
-          format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Invalid Request
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32600
-              description: The JSON sent is not a valid Request object.
-    MethodNotFound:
-      title: MethodNotFound
-      type: object
-      required:
-        - jsonrpc
-        - id
-        - error
-      properties:
-        jsonrpc:
+          example: Parse error
+          description: |
+            A String providing a short description of the error.
+            The message SHOULD be limited to a concise single sentence.
+        data:
           type: string
-          default: '2.0'
-        id:
-          type: integer
-          format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Method not found
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32601
-              description: The method does not exist / is not available.
-    InvalidParams:
-      title: InvalidParams
-      type: object
-      required:
-        - jsonrpc
-        - id
-        - error
-      properties:
-        jsonrpc:
-          type: string
-          default: '2.0'
-        id:
-          type: integer
-          format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Invalid params
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32602
-              description: Invalid method parameter(s).
-    InternalError:
-      title: InternalError
-      type: object
-      required:
-        - jsonrpc
-        - id
-        - error
-      properties:
-        jsonrpc:
-          type: string
-          default: '2.0'
-        id:
-          type: integer
-          format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Internal error
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32603
-              description: Internal JSON-RPC error.
-    ServerError:
-      title: ServerError
-      type: object
-      required:
-        - jsonrpc
-        - id
-        - error
-      properties:
-        jsonrpc:
-          type: string
-          default: '2.0'
-        id:
-          type: integer
-          format: int64
-        error:
-          type: object
-          title: ErrorMember
-          required:
-            - code
-          properties:
-            message:
-              type: string
-              default: Server error
-            data:
-              type: string
-            code:
-              type: integer
-              format: int32
-              default: -32000
-              description: '-32000 to -32099 </br> Reserved for implementation-defined server-errors.'
+          description: |
+            A Primitive or Structured value that contains additional information about the error.
+            This may be omitted.
+            The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.).
     JsonRpcResponse:
       type: object
       required:
         - jsonrpc
         - id
-        - result
       properties:
         jsonrpc:
           type: string
@@ -435,11 +387,12 @@ components:
         id:
           type: integer
           format: int64
+        error:
+          $ref: '#/components/schemas/ErrorMember'
         result: {}
     RewardSpec:
       title: RewardSpec
       description: |
-        Haha
         <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
       type: object
       required:
@@ -448,7 +401,7 @@ components:
         - kir
         - minted
         - proposer
-        - rewords
+        - rewards
         - stakers
         - totalFee
       properties:
@@ -465,25 +418,21 @@ components:
           format: int64
           description: the amount allocated to KIR
         minted:
-          type: integer
-          format: int64
+          type: number
+          format: double
           description: the amount newly minted
           example: 9600000000000000000
         proposer:
-          type: integer
-          format: int64
+          type: number
+          format: double
           description: the amount allocated to the block proposer
           example: 9600000000000000000
-        rewords:
+        rewards:
           type: object
           description: mapping from reward recipient to amounts
-          properties:
-            address:
-              type: string
-          required:
-            - address
           additionalProperties:
-            type: integer
+            type: number
+            format: double
           example:
             '1.0278187497989767e+48': 9600000000000000000
         stakers:
@@ -499,16 +448,3 @@ components:
       properties:
         result:
           $ref: '#/components/schemas/RewardSpec'
-  responses:
-    DefaultErrorResponse:
-      description: Error Response
-      content:
-        application/json:
-          schema:
-            oneOf:
-              - $ref: '#/components/schemas/ParseError'
-              - $ref: '#/components/schemas/InvalidRequest'
-              - $ref: '#/components/schemas/MethodNotFound'
-              - $ref: '#/components/schemas/InvalidParams'
-              - $ref: '#/components/schemas/InternalError'
-              - $ref: '#/components/schemas/ServerError'

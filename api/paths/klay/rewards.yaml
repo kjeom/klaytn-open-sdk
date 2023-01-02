@@ -18,22 +18,30 @@ paths:
       summary: "[getRewards] Find distributed block rewards"
       description: |
         Returns distributed block rewards information at the latest block number
-        
+
         **JSONRPC:** `klay_getRewards`
       parameters:
         - name: blockNumberOrTag
+          required: false
           schema:
             oneOf:
-              - type: integer
-                format: BN | BigNumber
+              - type: number
+                format: double
+                title: blockNumber
+                description: BN | BigNumber
               - type: string
-                enum: [latest, pending, earliest]
+                title: blockTag
+                example: [latest, pending, earliest]
             readOnly: true
           description: |
             blockNumber is the block number
             blockTag is the string "latest", "earliest" or "pending"
-          in: header
+          in: query
       requestBody:
+        required: true
+        description: |
+          blockNumber is the block number
+          blockTag is the string "latest", "earliest" or "pending"
         content:
           application/json:
             schema:
@@ -45,11 +53,11 @@ paths:
                       type: string
                       default: klay_getRewards
                     params:
-                      example: ['latest']
+                      example: ["latest"]
 
       responses:
-        200:
-          description: | 
+        default:
+          description: |
             block rewards information <br/>
             Link <br/>
             <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
@@ -59,14 +67,12 @@ paths:
                 allOf:
                   - $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse"
                   - $ref: "../../components/schemas/RewardSpec.yaml#/components/schemas/RewardSpecResult"
-        default:
-          $ref: "../../components/errors/DefaultErrorResponse.yaml"
       x-codeSamples:
-        - lang: 'typescript'
-          label: 'Typescript'
+        - lang: "typescript"
+          label: "Typescript"
           source:
-            $ref: "../../../sdk/typescript-axios/test/klay/getRewards.test.ts"
-        - lang: 'curl'
-          label: 'Curl'
+            $ref: "../../../sdk/client/typescript-axios/test/klay/getRewards.test.ts"
+        - lang: "curl"
+          label: "Curl"
           source:
             $ref: "../../code-samples/klay/getReward.sh"

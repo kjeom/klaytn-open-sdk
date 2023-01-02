@@ -33,4 +33,5 @@ paths:
     $ref: ./paths/klay/rewards.yaml#/paths/~1klay~1getRewards
   /klay/account/accountCreated:
     $ref: ./paths/klay/account.yaml#/paths/~1klay~1accountCreated
-
+  /klay/account/accountCreated2:
+    $ref: ./paths/klay/account.yaml#/paths/~1klay~1accountCreated2

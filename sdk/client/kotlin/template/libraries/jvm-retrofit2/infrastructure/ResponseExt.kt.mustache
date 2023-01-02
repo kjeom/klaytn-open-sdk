@@ -10,6 +10,10 @@ import com.google.gson.JsonParseException
 {{/gson}}
 import retrofit2.Response
 
+{{#gson}}
+import retrofit2.Call
+{{/gson}}
+
 {{#moshi}}
 @Throws(JsonDataException::class)
 inline fun <reified T> Response<*>.getErrorResponse(serializerBuilder: Moshi.Builder = Serializer.moshiBuilder): T? {
@@ -33,3 +37,22 @@ inline fun <reified T> Response<*>.getErrorResponse(serializerBuilder: GsonBuild
     return null
 }
 {{/gson}}
+{{#gson}}
+fun <T> Call<T>.result(): T? {
+    try {
+        val response = this.execute()
+        if (response.isSuccessful && response.body() != null) {
+            return response.body()
+        } else {
+            throw Exception("${response.errorBody()?.string() ?: "Unknown Error"}")
+        }
+    } catch (error: Exception) {
+        throw error
+    }
+}
+{{/gson}}
+
+data class RequestBodyParams(
+    val params: List<Any?>?,
+    val method: String
+)

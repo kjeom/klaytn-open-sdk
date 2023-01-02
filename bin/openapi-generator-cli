@@ -6,4 +6,4 @@ java -ea                          \
   -Xms512M                        \
   -Xmx1024M                       \
   -server                         \
-  -jar "${CURRENT_FILE_DIR}"/openapi-generator-cli-6.3.0.jar "$@"
+  -jar "${CURRENT_FILE_DIR}"/openapi-generator-cli-6.2.1.jar "$@"

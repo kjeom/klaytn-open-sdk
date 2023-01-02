@@ -1,8 +1,8 @@
-## User customization of typescript axios 
+## User customization of typescript 
 ### deploy
 ```shell
-./gradlew clean :typescript-axios:deployJar
-./gradlew cleanTest :typescript-axios:test
+./gradlew clean :deployJar
+./gradlew cleanTest :test
 ```
 
 ## Test
@@ -12,4 +12,5 @@
 
 ## Jar file
 - Generate jar include a customized code generator class
-- This jar file include openapi-generator-cli-$VERSION.jar
+- This jar file include caver-openapi-generator-cli.jar
+

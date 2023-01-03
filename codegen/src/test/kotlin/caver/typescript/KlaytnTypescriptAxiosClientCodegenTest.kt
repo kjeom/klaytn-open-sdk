@@ -3,7 +3,6 @@
  */
 package caver.typescript
 
-import caver.kotlin.KlaytnKotlinClientCodegen
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

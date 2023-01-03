@@ -1,4 +1,26 @@
-## User customization of typescript 
+## User customization of language SDKs 
+### Add a custom codegen
+- if you want to add a kotlin codegen 
+- Add custom File
+  - src/main/kotlin/caver/kotlin/KlaytnKotlinClientCodegen.kt
+- Extend KotlinClientCodegen class 
+    ```kotlin
+    class KlaytnKotlinClientCodegen : KotlinClientCodegen
+    ```
+- Add META-INF.services resource
+  - Edit src/main/resources/META-INF.services
+    ```
+    caver.kotlin.KlaytnKotlinClientCodegen
+    ```
+- Add Test Case
+  - Add src/test/kotlin/caver/kotlin/KlaytnKotlinClientCodegenTest.kt 
+  - Add Test for ServiceLoader
+  ```kotlin
+  val loader = ServiceLoader.load(
+    CodegenConfig::class.java,
+    CodegenConfig::class.java.classLoader
+  )
+  ```
 ### deploy
 ```shell
 ./gradlew clean :deployJar

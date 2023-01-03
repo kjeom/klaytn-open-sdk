@@ -1,14 +1,17 @@
-package caver.kotlin
+package caver.java
 
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.servers.Server
 import org.openapitools.codegen.CodegenOperation
-import org.openapitools.codegen.languages.KotlinClientCodegen
+import org.openapitools.codegen.SupportingFile
+import org.openapitools.codegen.config.CodegenConfigurator.LOGGER
+import org.openapitools.codegen.languages.JavaClientCodegen
 import org.openapitools.codegen.model.ModelsMap
+import java.io.File
 
-class KlaytnKotlinClientCodegen : KotlinClientCodegen {
+class KlaytnJavaClientCodegen : JavaClientCodegen {
     companion object {
-        val caverName = "caver-kotlin"
+        val caverName = "caver-java"
     }
 
     constructor() : super() {
@@ -16,6 +19,18 @@ class KlaytnKotlinClientCodegen : KotlinClientCodegen {
 
     override fun getName(): String {
         return caverName
+    }
+
+    override fun processOpts() {
+        super.processOpts()
+
+        var supportingFile = supportingFiles.find { it -> it.templateFile.equals("build.gradle.mustache") }
+        LOGGER.info("Support gradle File is $supportingFile")
+
+        // infrastructure destination folder
+        val apiFolder =
+            (sourceFolder + File.separator + apiPackage).replace(".", "/")
+        supportingFiles.add(SupportingFile("RequestBodyParams.java.mustache", apiFolder, "RequestBodyParams.java"))
     }
 
     override fun getUseInlineModelResolver(): Boolean {
@@ -31,12 +46,7 @@ class KlaytnKotlinClientCodegen : KotlinClientCodegen {
         val op = super.fromOperation(path, httpMethod, operation, servers)
         val removedImports: MutableSet<String> = HashSet()
         for (name in op.imports) {
-            if (name.contains("ParameterOneOf")
-                || name.contains("OneOfLessThanNumberCommaStringGreaterThan")
-                || name.contains(
-                    "OneOfLessThanDoubleCommaStringGreaterThan"
-                )
-            ) {
+            if (name.contains("OneOfdoublestring") || name.contains("OneOfnumberstring")) {
                 removedImports.add(name)
             }
         }
@@ -52,9 +62,9 @@ class KlaytnKotlinClientCodegen : KotlinClientCodegen {
         for (entry in result.values) {
             for (mo in entry.models) {
                 for (name in mo.model.imports) {
-                    if (name.endsWith("ParameterOneOf")) {
-                        removedModel.add(mo.model.name)
-                    }
+//                    if (name.endsWith("ParameterOneOf")) {
+//                        removedModel.add(mo.model.name)
+//                    }
                 }
             }
         }

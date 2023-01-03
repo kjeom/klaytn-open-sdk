@@ -42,7 +42,6 @@ paths:
           schema:
             oneOf:
               - type: number
-                format: double
                 title: blockNumber
                 description: BN | BigNumber
               - type: string
@@ -145,7 +144,6 @@ paths:
           schema:
             oneOf:
               - type: number
-                format: double
                 title: blockNumber
                 description: BN | BigNumber
               - type: string
@@ -396,7 +394,7 @@ components:
         <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
       type: object
       required:
-        - burnFee
+        - burntFee
         - kfg
         - kir
         - minted
@@ -405,7 +403,7 @@ components:
         - stakers
         - totalFee
       properties:
-        burnFee:
+        burntFee:
           type: integer
           format: int64
           description: the amount burnt

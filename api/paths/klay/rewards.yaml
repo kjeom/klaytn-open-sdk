@@ -26,7 +26,6 @@ paths:
           schema:
             oneOf:
               - type: number
-                format: double
                 title: blockNumber
                 description: BN | BigNumber
               - type: string
@@ -71,7 +70,7 @@ paths:
         - lang: "typescript"
           label: "Typescript"
           source:
-            $ref: "../../../sdk/client/typescript-axios/test/klay/getRewards.test.ts"
+            $ref: "../../../sdk/client/typescript-axios/openapi-test/klay/getRewards.test.ts"
         - lang: "curl"
           label: "Curl"
           source:

@@ -182,8 +182,8 @@ class {{classname}}Service() {
 
 {{#operations}}
     {{#operation}}
-    fun {{operationId}}({{#queryParams}}{{^composedSchemas}}{{{paramName}}}: {{{dataType}}}{{^required}}? = null{{/required}}{{^last}},{{/last}}{{/composedSchemas}}{{/queryParams}}): {{{returnType}}}? {
-        return api.{{operationId}}(RequestBodyParams(listOf({{#queryParams}}{{^composedSchemas}}{{{paramName}}}{{^last}},{{/last}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method)).result()
+    fun {{operationId}}({{#queryParams}}{{^composedSchemas}}{{^-first}}, {{/-first}}{{{paramName}}}: {{{dataType}}}{{^required}}? = null{{/required}}{{/composedSchemas}}{{/queryParams}}): {{{returnType}}}? {
+        return api.{{operationId}}(RequestBodyParams(listOf({{#queryParams}}{{^composedSchemas}}{{^-first}}, {{/-first}}{{{paramName}}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method)).result()
     }
 
     {{/operation}}

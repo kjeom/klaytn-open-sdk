@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Completable;
 import retrofit2.Call;
 {{/doNotUseRx}}
 import retrofit2.http.*;
+import retrofit2.Retrofit;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -29,10 +30,12 @@ import okhttp3.MultipartBody;
 {{/imports}}
 
 {{^fullJavaUtil}}
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 {{/fullJavaUtil}}
 
 {{#operations}}
@@ -41,9 +44,9 @@ public interface {{classname}} {
   /**
    * {{summary}}
    * {{notes}}
-{{#allParams}}
+{{#bodyParams}}
    * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
-{{/allParams}}
+{{/bodyParams}}
    * @return {{^doNotUseRx}}{{#useRxJava2}}{{#returnType}}Observable&lt;{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{returnType}}{{/isResponseFile}}&gt;{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Observable&lt;{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{returnType}}{{/isResponseFile}}&gt;{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{/doNotUseRx}}{{#doNotUseRx}}Call&lt;{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{returnType}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}&gt;{{/doNotUseRx}}
 {{#isDeprecated}}
    * @deprecated
@@ -72,9 +75,51 @@ public interface {{classname}} {
   {{/formParams}}
   @{{httpMethod}}("{{{path}}}")
   {{^doNotUseRx}}{{#useRxJava2}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava2}}{{#useRxJava3}}{{#returnType}}Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{/isResponseFile}}>{{/returnType}}{{^returnType}}Completable{{/returnType}}{{/useRxJava3}}{{/doNotUseRx}}{{#doNotUseRx}}Call<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{{returnType}}}{{^returnType}}Void{{/returnType}}{{/isResponseFile}}>{{/doNotUseRx}} {{operationId}}({{^allParams}});{{/allParams}}
-    {{#allParams}}{{>libraries/retrofit2/queryParams}}{{>libraries/retrofit2/pathParams}}{{>libraries/retrofit2/headerParams}}{{>libraries/retrofit2/bodyParams}}{{>libraries/retrofit2/formParams}}{{^-last}}, {{/-last}}{{#-last}}
+    {{#allParams}}{{>libraries/retrofit2/bodyParams}}{{^-last}}{{/-last}}{{#-last}}
   );{{/-last}}{{/allParams}}
+
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @{{httpMethod}}("{{{path}}}")
+  Call<{{{returnType}}}> {{operationId}}(
+    @retrofit2.http.Body RequestBodyParams body
+  );
 
   {{/operation}}
 }
 {{/operations}}
+
+class {{classname}}Service {
+    private {{classname}} api;
+{{#operations}}{{#operation}}{{#bodyParam}}
+    private String {{{operationId}}}Method = (new {{{dataType}}}()).getMethod();{{/bodyParam}}{{/operation}}{{/operations}}
+
+    {{classname}}Service(Retrofit retrofit) {
+        api = retrofit.create({{classname}}.class);
+    }
+
+{{#operations}}
+    {{#operation}}
+    Call<{{{returnType}}}> {{operationId}}({{#queryParams}}{{^composedSchemas}}{{^-first}}, {{/-first}}{{{dataType}}} {{{paramName}}}{{/composedSchemas}}{{/queryParams}}){
+        return api.{{operationId}}(new RequestBodyParams(Arrays.asList({{#queryParams}}{{^composedSchemas}}{{^-first}}, {{/-first}}{{{paramName}}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method));
+    }
+
+    {{/operation}}
+{{/operations}}
+{{#operations}}
+    {{#operation}}
+        {{#queryParams}}
+            {{#composedSchemas}}
+                {{#oneOf}}
+    Call<{{{returnType}}}> {{operationId}}({{{baseType}}} {{{title}}}{{#queryParams}}{{^composedSchemas}}, {{{dataType}}} {{{paramName}}}{{/composedSchemas}}{{/queryParams}}) {
+        return api.{{operationId}}(new RequestBodyParams(Arrays.asList({{{title}}}{{#queryParams}}{{^composedSchemas}}, {{{paramName}}}{{/composedSchemas}}{{/queryParams}}), {{{operationId}}}Method));
+    }
+
+                {{/oneOf}}
+            {{/composedSchemas}}
+        {{/queryParams}}
+    {{/operation}}
+{{/operations}}
+}
+

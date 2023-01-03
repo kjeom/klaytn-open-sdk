@@ -8,14 +8,13 @@
 
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
+
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.7.20"
+    id("org.jetbrains.kotlin.jvm") version "1.7.21"
 }
 
-val openApiGeneratorVersion: String by project
 val kotestVersion: String by project
-val kotlinVersion: String by project
 val retrofitVersion: String by project
 
 repositories {
@@ -27,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    implementation(files("../openapi/build/libs/caver-kotlin-v1.10.0.jar"))
+    implementation(files("../openapi/build/libs/caver-java-v1.10.0.jar"))
 
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))

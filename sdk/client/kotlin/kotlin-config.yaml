@@ -20,3 +20,8 @@ importMappings:
 inlineSchemaNameMappings:
   accountCreated_200_response: AccountCreatedResponse
   getRewards_default_response: GetRewardsResponse
+globalProperties:
+  apiDocs: false
+  modelDocs: false
+  apiTests: false
+  modelTests: false

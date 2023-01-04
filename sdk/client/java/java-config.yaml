@@ -16,3 +16,10 @@ additionalProperties:
   openApiNullable: false
   apiPackage: caver.sdk.apis
   modelPackage: caver.sdk.models
+typeMappings:
+  double: java.math.BigInteger
+importMappings:
+  GetRewardsDefaultResponse: caver.sdk.models.GetRewardsResponse
+inlineSchemaNameMappings:
+  accountCreated_default_response: AccountCreatedResponse
+  getRewards_default_response: GetRewardsResponse

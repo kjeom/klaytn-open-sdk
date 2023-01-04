@@ -1,17 +1,14 @@
-package caver.java
+package caver.sdk
 
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.servers.Server
 import org.openapitools.codegen.CodegenOperation
-import org.openapitools.codegen.SupportingFile
-import org.openapitools.codegen.config.CodegenConfigurator.LOGGER
-import org.openapitools.codegen.languages.JavaClientCodegen
+import org.openapitools.codegen.languages.JavascriptClientCodegen
 import org.openapitools.codegen.model.ModelsMap
-import java.io.File
 
-class KlaytnJavaClientCodegen : JavaClientCodegen {
+class KlaytnJavascriptClientCodegen : JavascriptClientCodegen {
     companion object {
-        val caverName = "caver-java"
+        val caverName = "caver-javascript"
     }
 
     constructor() : super() {
@@ -25,12 +22,6 @@ class KlaytnJavaClientCodegen : JavaClientCodegen {
         super.processOpts()
 
         var supportingFile = supportingFiles.find { it -> it.templateFile.equals("build.gradle.mustache") }
-        LOGGER.info("Support gradle File is $supportingFile")
-
-        // infrastructure destination folder
-        val apiFolder =
-            (sourceFolder + File.separator + apiPackage).replace(".", "/")
-        supportingFiles.add(SupportingFile("RequestBodyParams.java.mustache", apiFolder, "RequestBodyParams.java"))
     }
 
     override fun getUseInlineModelResolver(): Boolean {

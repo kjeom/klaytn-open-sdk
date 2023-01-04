@@ -1,4 +1,4 @@
-package caver.kotlin
+package caver.sdk
 
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.servers.Server

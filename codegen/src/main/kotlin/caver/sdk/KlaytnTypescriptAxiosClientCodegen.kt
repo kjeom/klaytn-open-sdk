@@ -1,4 +1,4 @@
-package caver.typescript
+package caver.sdk
 
 import org.openapitools.codegen.languages.TypeScriptAxiosClientCodegen
 

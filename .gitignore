@@ -367,4 +367,5 @@ bin/**.jar
 # Yarn
 **/yarn-error.log
 **/yarn.lock
+**/coverage
 

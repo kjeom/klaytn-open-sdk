@@ -22,7 +22,7 @@ paths:
         **JSONRPC:** `klay_getRewards`
       parameters:
         - name: blockNumberOrTag
-          required: false
+          required: true
           schema:
             oneOf:
               - type: number
@@ -37,7 +37,6 @@ paths:
             blockTag is the string "latest", "earliest" or "pending"
           in: query
       requestBody:
-        required: true
         description: |
           blockNumber is the block number
           blockTag is the string "latest", "earliest" or "pending"

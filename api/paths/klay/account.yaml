@@ -96,17 +96,17 @@ paths:
       tags:
         - klay.account
       parameters:
-        - name: address
+        - name: blockNumber
           schema:
-            type: string
-            format: 20-byte DATA
+            type: number
             readOnly: true
           description: Address
           in: query
-        - name: blockNumber
+        - name: address
           required: true
           schema:
-            type: number
+            type: string
+            format: 20-byte DATA
             readOnly: true
           description: Address
           in: query

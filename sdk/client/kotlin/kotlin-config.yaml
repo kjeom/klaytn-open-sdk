@@ -14,7 +14,7 @@ templateDir: ./template
 #  format: double
 # -> double type is mapped to BigInteger
 typeMappings:
-  double: java.math.BigInteger
+  "java.math.BigDecimal": java.math.BigInteger
 importMappings:
   GetRewardsDefaultResponse: caver.sdk.models.GetRewardsResponse
 inlineSchemaNameMappings:

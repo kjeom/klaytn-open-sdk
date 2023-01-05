@@ -74,3 +74,7 @@ paths:
           label: "Curl"
           source:
             $ref: "../../code-samples/klay/getReward.sh"
+        - lang: "kotlin"
+          label: "Kotlin"
+          source:
+            $ref: "../../../sdk/client/kotlin/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardTest.kt"

@@ -2,7 +2,7 @@
 ### Add a custom codegen
 - if you want to add a kotlin codegen 
 - Add custom File
-  - src/main/kotlin/caver/kotlin/KlaytnKotlinClientCodegen.kt
+  - src/main/kotlin/caver/sdk/KlaytnKotlinClientCodegen.kt
 - Extend KotlinClientCodegen class 
     ```kotlin
     class KlaytnKotlinClientCodegen : KotlinClientCodegen
@@ -13,7 +13,7 @@
     caver.kotlin.KlaytnKotlinClientCodegen
     ```
 - Add Test Case
-  - Add src/test/kotlin/caver/kotlin/KlaytnKotlinClientCodegenTest.kt 
+  - Add src/test/kotlin/caver/sdk/KlaytnKotlinClientCodegenTest.kt 
   - Add Test for ServiceLoader
   ```kotlin
   val loader = ServiceLoader.load(
@@ -34,5 +34,6 @@
 
 ## Jar file
 - Generate jar include a customized code generator class
-- This jar file include caver-openapi-generator-cli.jar
+- This jar file include openapi-generator-cli.jar
+- Generate a caver-openapi-generator-cli.jar and locate in bin/libs directory
 

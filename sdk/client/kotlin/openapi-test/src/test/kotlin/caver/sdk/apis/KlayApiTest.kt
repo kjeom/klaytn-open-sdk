@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.JsonRpcConverterFactory
+import java.math.BigDecimal
 import java.math.BigInteger
 import java.net.UnknownHostException
 
@@ -69,7 +70,7 @@ class KlaytnApiTest : BehaviorSpec({
         When("Call Service API") {
             val apiService = KlayApiService(retrofit)
             Then("Get getRewards by number") {
-                val rewards = apiService.getRewards(BigInteger.valueOf(1))
+                val rewards = apiService.getRewards(BigDecimal.valueOf(1))
                 rewards?.result?.rewards?.shouldNotBeEmpty()
             }
         }

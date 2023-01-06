@@ -22,7 +22,7 @@
     - redoc styles document
     - 모든 API들을 하나의 klaytn-openapi.yaml 파일로 생성
     
-    ```jsx
+    ```shell
     $ yarn build
     ```
     
@@ -76,7 +76,7 @@ Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
     ```
     
 
-### D**eploy**
+### Deploy
 
 ```
 ./gradlew clean :deployJar
@@ -121,7 +121,7 @@ openapi 설치나 배포를 통해 생성한 jar 파일을 openapi-test에서 �
 
 generator config 파일 설정에 필요한 옵션을 확인하기 
 
-```kotlin
+```shell
 bin/caver-openapi-generator-cli config-help -g kotlin
 ```
 

@@ -1,21 +1,10 @@
-# klaytn-open-sdk
+# Klaytn Open SDK
 
-## Download openapi-generator-cli
-```shell
-$ cd bin
-$ sh install-generator.sh
-```
-
-## Add API
-1. Choose an API tag(group)
-    - klay
-    - governance
-    - eth
-    - etc 
-1. Add paths
-    - choose directory like api/paths/klay, it's up to you which making a new file or using an existed file
-      - api/paths/klay/rewards.yaml
-    - add REST API paths like /klay/getRewards, it's not a real path in json rpc. It's for a syntactic path, this uri path is not used in json rpc call.
+The open SDK generates codes by language which you want to support.
+- It uses Klaytn JSON-RPC call.
+- It also makes JSON-RPC API documentation.
+- It can call the JSON-RPC post by SwaggerUI.
+- You can use JSON-RPC APIs which is generated with OpenAPI generator.
 
 ## Setting Node 
 - Use node version more than v12
@@ -28,7 +17,7 @@ $ nvm use v16.13.1
 - Read [README.md](./codegen/README.md)
 
 
-## Show config help 
+## Check generator config help 
 ```shell
 bin/caver-openapi-generator-cli config-help -g typescript-axios
 ```
@@ -38,3 +27,16 @@ bin/caver-openapi-generator-cli config-help -g typescript-axios
 [redoc style site](https://henry-will.github.io/klaytn-open-sdk/)
 ### Swagger UI
 [swagger ui for api test](https://henry-will.github.io/klaytn-open-sdk/SwaggerUI/)
+### User Guide for Open SDK
+[User Guide](UserGuide.md)
+
+#### [api](api/README.md) directory
+
+#### [bin](bin/README.md) directory
+
+#### [codegen](codegen/README.md) directory
+
+#### [sdk](sdk/README.md) directory
+
+#### [site](site/README.md) directory
+

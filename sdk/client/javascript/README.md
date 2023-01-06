@@ -1,8 +1,8 @@
-# caver-typescript sdk
+# caver-javascript sdk
 
 ## Requirements
 - download openapi-generator
-- check codegen/src/main/kotlin/caver/sdk/KlaytnTypescriptAxiosClientCodegen.kt
+- check codegen/src/main/kotlin/caver/sdk/KlaytnJavascriptClientCodegen.kt
 - build caver-openapi-generator-cli jar
 - check and run caver-openapi-generator-cli
 
@@ -15,8 +15,8 @@ $ nvm use v16.13.1
 
 ## Make openapi generator source
 ```shell
-$ cd sdk/client/typescript-axios
-$ sh typescript-generate.sh
+$ cd sdk/client/javascript
+$ sh javascript-generate.sh
 ```
 ## Test
 ```shell
@@ -25,9 +25,8 @@ yarn test
 ```
 ## To see files
 ### .openapi-generator-ignore
-### typescript-config.yaml
+### javascript-config.yaml
 ### template
-- template/apiInner.mustache
-- template/model.mustache
+- template/libraries/javascript/api.mustache
 ### Test file
-- openapi-test/klay/getRewards.test.ts
+- openapi-test/test/klay/KlayApiGetRewards.test.ts

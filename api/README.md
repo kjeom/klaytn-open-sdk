@@ -1,4 +1,4 @@
-## api
+## api directory
 
 - openapi 3.0을 기준으로 yaml로 JSON-RPC API 정의
 - [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
@@ -19,3 +19,14 @@
     ```
 
     - 생성 파일 위치 : site/klyatn-openapi.yaml
+
+### Add API
+#### Choose an API tag(group)
+- klay
+- governance
+- eth
+- etc
+#### Add paths
+- choose directory like api/paths/klay, it's up to you which making a new file or using an existed file
+  - api/paths/klay/rewards.yaml
+- add REST API paths like /klay/getRewards, it's not a real path in json rpc. It's for a syntactic path, this uri path is not used in json rpc call.

@@ -21,4 +21,4 @@ sh kotlin-generate.sh
 - template/libraries/jvm-retrofit2/api.mustache
 - template/libraries/jvm-retrofit2/bodyParamJavadoc.mustache
 - template/libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
-### openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiTest.kt
+### openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt

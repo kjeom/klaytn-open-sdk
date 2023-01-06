@@ -66,15 +66,23 @@ paths:
                   - $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse"
                   - $ref: "../../components/schemas/RewardSpec.yaml#/components/schemas/RewardSpecResult"
       x-codeSamples:
-        - lang: "typescript"
-          label: "Typescript"
-          source:
-            $ref: "../../../sdk/client/typescript-axios/openapi-test/klay/getRewards.test.ts"
         - lang: "curl"
           label: "Curl"
           source:
             $ref: "../../code-samples/klay/getReward.sh"
+        - lang: "typescript"
+          label: "Typescript"
+          source:
+            $ref: "../../../sdk/client/typescript-axios/openapi-test/klay/getRewards.test.ts"
         - lang: "kotlin"
           label: "Kotlin"
           source:
-            $ref: "../../../sdk/client/kotlin/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardTest.kt"
+            $ref: "../../../sdk/client/kotlin/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
+        - lang: "java"
+          label: "Java"
+          source:
+            $ref: "../../../sdk/client/java/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
+        - lang: "javascript"
+          label: "Javascript"
+          source:
+            $ref: "../../../sdk/client/javascript/openapi-test/test/klay/KlayApiGetRewards.test.js"

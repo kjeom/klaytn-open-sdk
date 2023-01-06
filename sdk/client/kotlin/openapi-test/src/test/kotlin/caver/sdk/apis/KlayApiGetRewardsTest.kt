@@ -10,7 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.JsonRpcConverterFactory
 import java.math.BigDecimal
 
-class KlaytnApiGetRewardTest : BehaviorSpec({
+class KlaytnApiGetRewardsTest : BehaviorSpec({
     val logging = HttpLoggingInterceptor()
     logging.level = HttpLoggingInterceptor.Level.BODY
 

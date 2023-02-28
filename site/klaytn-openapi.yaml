@@ -10,9 +10,13 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 tags:
   - name: klay
+    description: klaytn node API
   - name: account
+    description: klaytn account API
   - name: governance
+    description: klaytn governance API
   - name: eth
+    description: API for ethereum namespace
 x-tagGroups:
   - name: Klay
     tags:
@@ -36,42 +40,13 @@ paths:
         Returns distributed block rewards information at the latest block number
 
         **JSONRPC:** `klay_getRewards`
-      parameters:
-        - name: blockNumberOrTag
-          required: true
-          schema:
-            oneOf:
-              - type: number
-                title: blockNumber
-                description: BN | BigNumber
-              - type: string
-                title: blockTag
-                example:
-                  - latest
-                  - pending
-                  - earliest
-            readOnly: true
-          description: |
-            blockNumber is the block number
-            blockTag is the string "latest", "earliest" or "pending"
-          in: query
       requestBody:
-        description: |
-          blockNumber is the block number
-          blockTag is the string "latest", "earliest" or "pending"
         content:
           application/json:
             schema:
               allOf:
                 - $ref: '#/components/schemas/JsonRpcRequest'
-                - type: object
-                  properties:
-                    method:
-                      type: string
-                      default: klay_getRewards
-                    params:
-                      example:
-                        - latest
+                - $ref: '#/components/schemas/RewardsReq'
       responses:
         default:
           description: |
@@ -83,7 +58,10 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/JsonRpcResponse'
-                  - $ref: '#/components/schemas/RewardSpecResult'
+                  - $ref: '#/components/schemas/RewardsResp'
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
       x-codeSamples:
         - lang: curl
           label: Curl
@@ -226,6 +204,34 @@ paths:
                     api.getRewards(1, {}, callbackOne);
                 });
             });
+        - lang: python
+          label: Python
+          source: |
+            # coding: utf-8
+            import unittest
+            from caver_python.configuration import Configuration
+            from caver_python.api_client import ApiClient
+            from caver_python.apis.tags.klay_api import KlayApi
+
+            class TestKlayGetRewards(unittest.TestCase):
+                _configuration = Configuration(host="http://localhost:8551")
+                klay = KlayApi(ApiClient(configuration=_configuration))
+                
+                def test_post(self):
+                    get_rewards_request = {
+                        "method": "klay_getRewards",
+                        # "id": 1,
+                        "jsonrpc": "2.0",
+                        # "params": [
+                            # 0
+                        # ]
+                    }
+                    # result = self.klay.get_rewards(body=get_rewards_request)
+                    result = self.klay.get_rewards()
+                    print(result)
+
+            if __name__ == '__main__':
+                unittest.main()
   /klay/account/accountCreated:
     post:
       operationId: accountCreated
@@ -431,10 +437,6 @@ components:
   schemas:
     JsonRpcRequest:
       type: object
-      required:
-        - method
-        - id
-        - jsonrpc
       properties:
         method:
           type: string
@@ -448,9 +450,28 @@ components:
           type: string
           default: '2.0'
           description: JSON-RPC Version (2.0)
+    BlockNumber:
+      title: blockNumber
+      type: integer
+      format: int64
+      description: the block number
+    BlockTag:
+      title: blockTag
+      type: string
+      description: the block tag [latest, pending, eariest]
+    RewardsReq:
+      type: object
+      properties:
+        method:
+          type: string
+          default: klay_getRewards
         params:
           type: array
-          items: {}
+          items:
+            default: latest
+            oneOf:
+              - $ref: '#/components/schemas/BlockNumber'
+              - $ref: '#/components/schemas/BlockTag'
     ErrorMember:
       type: object
       title: ErrorMember
@@ -496,14 +517,11 @@ components:
         error:
           $ref: '#/components/schemas/ErrorMember'
         result: {}
-    RewardSpec:
-      title: RewardSpec
-      description: |
-        <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />
+    Result:
       type: object
       required:
         - burntFee
-        - kfg
+        - kgf
         - kir
         - minted
         - proposer
@@ -549,8 +567,8 @@ components:
           type: integer
           format: int64
           description: total tx fee spent
-    RewardSpecResult:
+    RewardsResp:
       type: object
       properties:
         result:
-          $ref: '#/components/schemas/RewardSpec'
+          $ref: '#/components/schemas/Result'

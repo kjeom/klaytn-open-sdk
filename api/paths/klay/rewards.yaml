@@ -20,38 +20,14 @@ paths:
         Returns distributed block rewards information at the latest block number
 
         **JSONRPC:** `klay_getRewards`
-      parameters:
-        - name: blockNumberOrTag
-          required: true
-          schema:
-            oneOf:
-              - type: number
-                title: blockNumber
-                description: BN | BigNumber
-              - type: string
-                title: blockTag
-                example: [latest, pending, earliest]
-            readOnly: true
-          description: |
-            blockNumber is the block number
-            blockTag is the string "latest", "earliest" or "pending"
-          in: query
+      
       requestBody:
-        description: |
-          blockNumber is the block number
-          blockTag is the string "latest", "earliest" or "pending"
         content:
           application/json:
-            schema:
+            schema: 
               allOf:
                 - $ref: "../../components/requests/JsonRpcRequest.yaml#/components/schemas/JsonRpcRequest"
-                - type: object
-                  properties:
-                    method:
-                      type: string
-                      default: klay_getRewards
-                    params:
-                      example: ["latest"]
+                - $ref: "../../components/schemas/RewardsSpec.yaml#/components/schemas/RewardsReq"
 
       responses:
         default:
@@ -64,25 +40,32 @@ paths:
               schema:
                 allOf:
                   - $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse"
-                  - $ref: "../../components/schemas/RewardSpec.yaml#/components/schemas/RewardSpecResult"
+                  - $ref: "../../components/schemas/RewardsSpec.yaml#/components/schemas/RewardsResp"
+            text/plain:
+              schema: 
+                $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse" 
       x-codeSamples:
         - lang: "curl"
           label: "Curl"
           source:
             $ref: "../../code-samples/klay/getReward.sh"
-        - lang: "typescript"
-          label: "Typescript"
-          source:
-            $ref: "../../../sdk/client/typescript-axios/openapi-test/klay/getRewards.test.ts"
-        - lang: "kotlin"
-          label: "Kotlin"
-          source:
-            $ref: "../../../sdk/client/kotlin/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
-        - lang: "java"
-          label: "Java"
-          source:
-            $ref: "../../../sdk/client/java/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
-        - lang: "javascript"
-          label: "Javascript"
-          source:
-            $ref: "../../../sdk/client/javascript/openapi-test/test/klay/KlayApiGetRewards.test.js"
+        # - lang: "typescript"
+        #   label: "Typescript"
+        #   source:
+        #     $ref: "../../../sdk/client/typescript-axios/openapi-test/klay/getRewards.test.ts"
+        # - lang: "kotlin"
+        #   label: "Kotlin"
+        #   source:
+        #     $ref: "../../../sdk/client/kotlin/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
+        # - lang: "java"
+        #   label: "Java"
+        #   source:
+        #     $ref: "../../../sdk/client/java/openapi-test/src/test/kotlin/caver/sdk/apis/KlayApiGetRewardsTest.kt"
+        # - lang: "javascript"
+        #   label: "Javascript"
+        #   source:
+        #     $ref: "../../../sdk/client/javascript/openapi-test/test/klay/KlayApiGetRewards.test.js"
+        - lang: "python"
+          label: "Python"
+          source: 
+            $ref: "../../../sdk/client/python/openapi-test/test/klay/KlayApiGetRewardsTest.py"

@@ -10,9 +10,13 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 tags:
   - name: klay
+    description: klaytn node API
   - name: account
+    description: klaytn account API
   - name: governance
+    description: klaytn governance API
   - name: eth
+    description: API for ethereum namespace
 #  - name: RewardSpec
 #    description: |
 #      <SchemaDefinition schemaRef="#/components/schemas/RewardSpec" />

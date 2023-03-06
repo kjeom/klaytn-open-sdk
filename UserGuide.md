@@ -11,22 +11,22 @@
 - Define JSON-RPC API in yaml based on openapi 3.0
 - [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
 - klay.yaml
-     - Added paths of JSON-RPC APIs
--paths
-     - The klay.yaml file refers to files created in the paths directory, and API definitions are created by groups (tags) in the paths directory.
--components
-     - Defines information about requests, responses, and schemas
--code-samples
-     - Create executable examples with CURL
+    - Added paths of JSON-RPC APIs
+- paths
+    - The klay.yaml file refers to files created in the paths directory, and API definitions are created by groups (tags) in the paths directory.
+- components
+    - Defines information about requests, responses, and schemas
+- code-samples
+    - Create executable examples with CURL
 - redocly
-     - redoc styles document
-     - Create all APIs in one klaytn-openapi.yaml file
+    - redoc styles document
+    - Create all APIs in one klaytn-openapi.yaml file
     
-     ```shell
-     $yarn build
-     ```
+    ```shell
+    $yarn build
+    ```
     
-     - Creation file location: site/klyatn-openapi.yaml
+    - Creation file location: site/klyatn-openapi.yaml
 
 ## bin
 
@@ -48,7 +48,7 @@ To deploy Custom Codegen, use gradle.
 ### Add Custom Codegen
 
 - The description is given assuming that you are developing the Kotlin SDK.
--Add custom file
+- Add custom file
     - src/main/kotlin/caver/sdk/KlaytnKotlinClientCodegen.kt
 - Extend KotlinClientCodegen class
     
@@ -64,7 +64,7 @@ To deploy Custom Codegen, use gradle.
         caver.sdk.KlaytnKotlinClientCodegen
         ```
         
--Add Test Case
+- Add Test Case
     - Add src/test/kotlin/caver/sdk/KlaytnKotlinClientCodegenTest.kt
     - Add Test for ServiceLoader
     
@@ -85,8 +85,8 @@ To deploy Custom Codegen, use gradle.
 
 ### **Test**
 
--Using the kotest
--Using Behavior Spec
+- Using the kotest
+- Using Behavior Spec
 - Locate an index.html and report files in build/reports/test
 
 ### **Jar file**
@@ -150,14 +150,13 @@ For each language, the mustache template provided by the OpenAPI generator is us
 
 You need the jvm-retorfit2 template files to use the retrofit2 library.
 
--libraries/jvm-retrofit2/api.mustache
+- libraries/jvm-retrofit2/api.mustache
     - Adding the api.mustache file overrides the existing api.mustache file.
     - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/api.mustache ) copy and modify the api.mustache file in .
-    -
--libraries/jvm-retrofit2/bodyParamJavadoc.mustache
+- libraries/jvm-retrofit2/bodyParamJavadoc.mustache
     - bodyParamJavadoc is the newly added mustache file
     - Add description of bodyParam
--libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
+- libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
     - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/infrastructure/ResponseExt Copy and modify the ResponseExt.kt.mustache file in .kt.mustache)
 
 ### .openapi-generator-ignore
@@ -168,4 +167,36 @@ You need the jvm-retorfit2 template files to use the retrofit2 library.
 ### openapi
 
 - Directory automatically created by generator
-- custom code for openapi
+- It is not recommended to create custom code in the openapi directory.
+- It is recommended to delete and re-create each time you run generate.
+- If there are necessary utils or features, it is recommended to create an additional module and test it by setting it in openapi-test
+
+### openapi-test
+
+- Use the package built in openapi. Assuming that the openapi package is distributed in the maven repository, configure the jar file to be used.
+- build.gradle.kts
+
+```kotlin
+dependencies {
+     implementation(files("../openapi/build/libs/caver-kotlin-v1.10.0.jar"))
+}
+```
+
+- It is recommended to test javascript or typescript in an environment distributed with npm
+- Create separate test files for each API. Used in samples when defining OpenAPI spec.
+
+![UserGuide.png](kotlin-test-sample.png)
+
+## site
+
+- klaytn-openapi.yaml
+     - Define OpenAPIs created with `yarn build` using [redocly](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
+     - Create divided API files as one Yaml file
+     - Used as spec in redocly format API documentation and SwaggerUI
+- index.html
+     - API documentation in redocly format is provided based on klaytn-openapi.yaml
+     - By providing Request samples, you can see examples of the development language you want.
+- SwaggerUI
+     - Provides Swagger-style API documentation
+     - APIs can be directly tested on the web by providing SwaggerUI function
+     - You can test CURL-style APIs online by selecting local, baobab, or cypress servers.

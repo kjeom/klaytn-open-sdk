@@ -11,32 +11,32 @@
 - Define JSON-RPC API in yaml based on openapi 3.0
 - [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
 - klay.yaml
-    - Added paths of JSON-RPC APIs
+    - added paths for JSON-RPC APIs
 - paths
-    - The klay.yaml file refers to files created in the paths directory, and API definitions are created by groups (tags) in the paths directory.
+    - The klay.yaml file refers to files created in the paths directory, and API definitions are grouped by the paths directory(tags).
 - components
-    - Defines information about requests, responses, and schemas
+    - define information about requests, response, schemas
 - code-samples
-    - Create executable examples with CURL
+    - You can write runnable examples with CURL
 - redocly
     - redoc styles document
-    - Create all APIs in one klaytn-openapi.yaml file
-    
+    - create all APIs only in klaytn-openapi.yaml file
+
     ```shell
-    $yarn build
+    $ yarn build
     ```
-    
-    - Creation file location: site/klyatn-openapi.yaml
+
+    - Location of generated files : site/klyatn-openapi.yaml
 
 ## bin
 
 - install-generator.sh
-     - Download the required version of openapi-generator-cli
-     - Currently download 6.2.1, 6.3.0-SNAPSHOT, 7.0.0-SNAPSHOT
+    - Download the required version of openapi-generator-cli
+    - Currently download 6.2.1, 6.3.0-SNAPSHOT, 7.0.0-SNAPSHOT
 - libs
-     - The directory where the caver-openapi-generator-cli.jar file created through `./gradlew clean :deployJar` in codegen is deployed.
-     - caver-openapi-generator-cli.jar inherits CodeGen for each language and contains custom-generated Codegen files
-     - [Custom Codegen](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
+    - The directory where the caver-openapi-generator-cli.jar file is deployed through `./gradlew clean :deployJar` in codegen.
+    - caver-openapi-generator-cli.jar inherits CodeGen for each language and contains custom-generated Codegen files
+    - [Custom Codegen](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
 - caver-openapi-generator-cli
 
 ## codegen
@@ -56,7 +56,7 @@ To deploy Custom Codegen, use gradle.
     class KlaytnKotlinClientCodegen : KotlinClientCodegen
     ```
     
-- Change generator name as `caver-kotlin` Use getName() to find the generatorName. Change getName() and register class in META-INF.services.
+- Change generator name as `caver-kotlin`. Use getName() to find the generatorName. Change getName() and register class in META-INF.services.
 - Add META-INF.services resource
     - Edit src/main/resources/META-INF.services
         
@@ -98,26 +98,24 @@ To deploy Custom Codegen, use gradle.
 ## SDK
 
 - Create SDK for each development language
-- Created by attaching caver prefix
+- Attach caver prefix
 - Currently implemented languages include typescript, kotlin, java, and javascript for clients.
-- Separation into client and server
+- Separate SDK into client and server
 - Describes how to develop an SDK based on kotlin
 
 ### kotlin-generate.sh
 
-Create a file name in the format [language]-generate.sh
+Create a file with the name of `sdk/client/[language]/[language]-generate.sh` format, this file is a script file to run `bin/caver-openapi-generator-cli`
 
-This is a script file to run bin/caver-openapi-generator-cli.
+As a result of the execution, an `sdk/client/[language]/openapi` directory is created, and APIs and models for kotlin are automatically created in the `sdk/client/[language]/openapi/src/api` folder and `sdk/client/[language]/openapi/src/model` folder in accordance with the OpenAPI specification.
 
-As a result of the execution, an openapi directory is created, and APIs and models for kotlin are automatically created according to the OpenAPI specification.
+If necessary, add a script that can create a jar file for the installation/distribution version of openapi.
 
-If necessary, add a script that can create an additional jar file for installation/distribution of openapi.
-
-Make the jar file created through openapi installation or distribution usable in openapi-test
+Make the jar file created through openapi installation or distribution for using in openapi-test
 
 ### kotlin-config.yaml
 
-Create a name of the form [language]-config.yaml
+Create a name of the form `sdk/client/[language]/[language]-config.yaml`
 
 Check the options needed to set up the generator config file
 
@@ -132,19 +130,19 @@ OpenAPI Generators List
 [OpenAPI Generator · Generate clients, servers, and documentation from OpenAPI 2.0/3.x documents](https://openapi-generator.tech/docs/generators)
 
 -generatorName
-    - kotlin : It is a generator for kotlin client provided by default in OpenAPI generator.
-    - caver-kotlin: The generator name of KlaytnKotlinClientCodegen customized in codegen.
+     - kotlin : default generator provided by OpenAPI generator for kotlin client
+     - caver-kotlin: the generator of KlaytnKotlinClientCodegen customized in codegen
 -outputDir
-    - This is a directory where APIs and models that are automatically created through the generator are created.
+     - directories where APIs and models are automatically created through the generator
 -inputSpec
-    - File defining OpenApi specification
-    - Use site/klaytn-openapi.yaml file
+     - File defining OpenApi specification
+     - Use `site/klaytn-openapi.yaml` file
 -templateDir
-    - mustache template file to add/change custom
+     - mustache template file for customizing
 
 ### template
 
-Use the [mustache](https://mustache.github.io/mustache.5.html) template. It seems that it will be changed to [Handlebars](https://handlebarsjs.com/) in the future.
+Use [mustache](https://mustache.github.io/mustache.5.html) template. It may change to [Handlebars](https://handlebarsjs.com/) someday.
 
 For each language, the mustache template provided by the OpenAPI generator is used.
 
@@ -152,12 +150,12 @@ You need the jvm-retorfit2 template files to use the retrofit2 library.
 
 - libraries/jvm-retrofit2/api.mustache
     - Adding the api.mustache file overrides the existing api.mustache file.
-    - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/api.mustache ) copy and modify the api.mustache file in .
+    - Copy and modify the api.mustache file in [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/api.mustache ). 
 - libraries/jvm-retrofit2/bodyParamJavadoc.mustache
     - bodyParamJavadoc is the newly added mustache file
     - Add description of bodyParam
 - libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
-    - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/infrastructure/ResponseExt Copy and modify the ResponseExt.kt.mustache file in .kt.mustache)
+    - Copy and modify the ResponseExt.kt.mustache file in [openapi-genrator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache).
 
 ### .openapi-generator-ignore
 
@@ -190,13 +188,13 @@ dependencies {
 ## site
 
 - klaytn-openapi.yaml
-     - Define OpenAPIs created with `yarn build` using [redocly](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
-     - Create divided API files as one Yaml file
-     - Used as spec in redocly format API documentation and SwaggerUI
+    - Define OpenAPIs created with `yarn build` using [redocly](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
+    - Create divided API files as one Yaml file
+    - This document is used as a specification in redocly format API document and SwaggerUI
 - index.html
-     - API documentation in redocly format is provided based on klaytn-openapi.yaml
-     - By providing Request samples, you can see examples of the development language you want.
+    - API documentation in redocly format is provided based on klaytn-openapi.yaml
+    - By providing Request samples, you can see examples of the development language you want.
 - SwaggerUI
-     - Provides Swagger-style API documentation
-     - APIs can be directly tested on the web by providing SwaggerUI function
-     - You can test CURL-style APIs online by selecting local, baobab, or cypress servers.
+    - Provides Swagger-style API documentation
+    - APIs can be directly tested on the web by providing SwaggerUI function
+    - You can test CURL-style APIs online by selecting local, baobab, or cypress servers.

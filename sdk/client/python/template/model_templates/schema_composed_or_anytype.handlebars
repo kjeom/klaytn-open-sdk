@@ -6,7 +6,18 @@ class {{#if this.classname}}{{classname}}{{else}}{{#if nameInSnakeCase}}{{name}}
     {{> model_templates/format_base }}
     {{/if}}
     {{#if composedSchemas}}
-    schemas.ComposedSchema,
+    {{!-- schemas.ComposedSchema, --}}
+        {{#each allOf}}
+        {{#if complexType}}
+                {{complexType}},
+        {{else}}
+            {{#if nameInSnakeCase}}
+                cls.{{name}},
+            {{else}}
+                cls.{{baseName}},
+            {{/if}}
+        {{/if}}
+        {{/each}}
     {{else}}
     schemas.AnyTypeSchema,
     {{/if}}

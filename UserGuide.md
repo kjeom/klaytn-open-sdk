@@ -1,54 +1,54 @@
 # User Guide for klaytn Open SDK
 
-# 목적
+# purpose
 
-- Klaytn JSON-RPC를 사용한 다양한 언어로 SDK를 자동 생성
+- Automatically generate SDKs in various languages using Klaytn JSON-RPC
 
-# 디렉토리 설명
+# directory description
 
 ## api
 
-- openapi 3.0을 기준으로 yaml로 JSON-RPC API 정의
+- Define JSON-RPC API in yaml based on openapi 3.0
 - [OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/latest.html)
 - klay.yaml
-    - JSON-RPC API들의 paths 추가
-- paths
-    - klay.yaml 파일은 paths 디렉토리에 만들어진 파일들을 참고하고, API 정의는 paths 디렉토리 그룹(태그)별로 만든다.
-- components
-    - requests, response, schemas 에 대한 정보를 정의한다
-- code-samples
-    - CURL로 실행 가능한 예제를 작성한다
+     - Added paths of JSON-RPC APIs
+-paths
+     - The klay.yaml file refers to files created in the paths directory, and API definitions are created by groups (tags) in the paths directory.
+-components
+     - Defines information about requests, responses, and schemas
+-code-samples
+     - Create executable examples with CURL
 - redocly
-    - redoc styles document
-    - 모든 API들을 하나의 klaytn-openapi.yaml 파일로 생성
+     - redoc styles document
+     - Create all APIs in one klaytn-openapi.yaml file
     
-    ```shell
-    $ yarn build
-    ```
+     ```shell
+     $yarn build
+     ```
     
-    - 생성 파일 위치 : site/klyatn-openapi.yaml
+     - Creation file location: site/klyatn-openapi.yaml
 
 ## bin
 
 - install-generator.sh
-    - 필요한 버전의 openapi-generator-cli를 다운로드한다
-    - 현재는 6.2.1, 6.3.0-SNAPSHOT, 7.0.0-SNAPSHOT을 다운로드 하고 있다
+     - Download the required version of openapi-generator-cli
+     - Currently download 6.2.1, 6.3.0-SNAPSHOT, 7.0.0-SNAPSHOT
 - libs
-    - codegen에서 `./gradlew clean :deployJar`을 통해 생성한 caver-openapi-generator-cli.jar 파일이 deploy되는 디렉토리
-    - caver-openapi-generator-cli.jar는 각 언어마다 CodeGen을 상속받아 custom하게 생성한 Codegen 파일들이 있다
-    - [Custom Codegen](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
+     - The directory where the caver-openapi-generator-cli.jar file created through `./gradlew clean :deployJar` in codegen is deployed.
+     - caver-openapi-generator-cli.jar inherits CodeGen for each language and contains custom-generated Codegen files
+     - [Custom Codegen](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)
 - caver-openapi-generator-cli
 
 ## codegen
 
-개발 언어별로 OpenApi generator를 커스터마이징 할 수 있습니다.
+OpenApi generator can be customized for each development language.
 
-Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
+To deploy Custom Codegen, use gradle.
 
-### Custom Codegen 추가하기
+### Add Custom Codegen
 
-- Kotlin SDK를 개발하는 경우를 가정해서 설명을 합니다.
-- Add custom File
+- The description is given assuming that you are developing the Kotlin SDK.
+-Add custom file
     - src/main/kotlin/caver/sdk/KlaytnKotlinClientCodegen.kt
 - Extend KotlinClientCodegen class
     
@@ -56,7 +56,7 @@ Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
     class KlaytnKotlinClientCodegen : KotlinClientCodegen
     ```
     
-- Change generator name as `caver-kotlin` getName()을 사용해 generatorName을  찾는다. getName()을 바꾸고 META-INF.services에 class를 등록하면 된다.
+- Change generator name as `caver-kotlin` Use getName() to find the generatorName. Change getName() and register class in META-INF.services.
 - Add META-INF.services resource
     - Edit src/main/resources/META-INF.services
         
@@ -64,14 +64,14 @@ Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
         caver.sdk.KlaytnKotlinClientCodegen
         ```
         
-- Add Test Case
+-Add Test Case
     - Add src/test/kotlin/caver/sdk/KlaytnKotlinClientCodegenTest.kt
     - Add Test for ServiceLoader
     
     ```kotlin
-    val loader = ServiceLoader.load(
-      CodegenConfig::class.java,
-      CodegenConfig::class.java.classLoader
+    val loader = ServiceLoader. load(
+       CodegenConfig::class.java,
+       CodegenConfig::class.java.classLoader
     )
     ```
     
@@ -85,8 +85,8 @@ Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
 
 ### **Test**
 
-- Using the kotest
-- Using Behavior Spec
+-Using the kotest
+-Using Behavior Spec
 - Locate an index.html and report files in build/reports/test
 
 ### **Jar file**
@@ -97,107 +97,75 @@ Custom Codegen을 배포하는 방법은 gradle을 사용합니다.
 
 ## SDK
 
-- 각 개발 언어 별로 SDK를 만든다
-- caver prefix를 붙여서 만든다
-- 현재 구현된 언어는 client용으로 typescript, kotlin, java, javascript가 있다
-- client와 server로 분리한다
-- kotlin을 기준으로  SDK 개발하는 방법을 설명한다
+- Create SDK for each development language
+- Created by attaching caver prefix
+- Currently implemented languages include typescript, kotlin, java, and javascript for clients.
+- Separation into client and server
+- Describes how to develop an SDK based on kotlin
 
 ### kotlin-generate.sh
 
-[language]-generate.sh 형식의 파일 이름을 만든다
+Create a file name in the format [language]-generate.sh
 
-bin/caver-openapi-generator-cli를 실행하기 위한 스크립트 파일이다
+This is a script file to run bin/caver-openapi-generator-cli.
 
-실행 결과로 openapi 디렉토리가 생성이 되고, OpenAPI 스팩에 맞게 kotlin용  API와 Model들이 자동 생성이 된다
+As a result of the execution, an openapi directory is created, and APIs and models for kotlin are automatically created according to the OpenAPI specification.
 
-필요시에 추가로 openapi의 설치/배포 버전 jar 파일 생성할 수 있는 스크립트도 추가를 한다
+If necessary, add a script that can create an additional jar file for installation/distribution of openapi.
 
-openapi 설치나 배포를 통해 생성한 jar 파일을 openapi-test에서 사용할 수 있도록 한다
+Make the jar file created through openapi installation or distribution usable in openapi-test
 
 ### kotlin-config.yaml
 
-[language]-config.yaml 형식의 이름을 만든다
+Create a name of the form [language]-config.yaml
 
-generator config 파일 설정에 필요한 옵션을 확인하기 
+Check the options needed to set up the generator config file
 
 ```shell
 bin/caver-openapi-generator-cli config-help -g kotlin
 ```
 
-[Kotlin Generator](https://openapi-generator.tech/docs/generators/kotlin) 설명 확인하기
+Check [Kotlin Generator](https://openapi-generator.tech/docs/generators/kotlin)
 
 OpenAPI Generators List
 
 [OpenAPI Generator · Generate clients, servers, and documentation from OpenAPI 2.0/3.x documents](https://openapi-generator.tech/docs/generators)
 
-- generatorName
-    - kotlin : OpenAPI generator에서 기본으로 제공하는 kotlin client 용 generator이다
-    - caver-kotlin : codegen에서 customizing한 KlaytnKotlinClientCodegen의 generator 이름이다.
-- outputDir
-    - generator를 통해 자동으로 생성해 주는 api와 model들이 생성되는 디렉토리이다
-- inputSpec
-    - OpenApi 스팩을 정의한 파일
-    - site/klaytn-openapi.yaml 파일을 사용한다
-- templateDir
-    - custom 하게 추가/변경할 mustache 템플릿 파일
+-generatorName
+    - kotlin : It is a generator for kotlin client provided by default in OpenAPI generator.
+    - caver-kotlin: The generator name of KlaytnKotlinClientCodegen customized in codegen.
+-outputDir
+    - This is a directory where APIs and models that are automatically created through the generator are created.
+-inputSpec
+    - File defining OpenApi specification
+    - Use site/klaytn-openapi.yaml file
+-templateDir
+    - mustache template file to add/change custom
 
 ### template
 
-[mustache](https://mustache.github.io/mustache.5.html) 템플릿을 사용한다. 추후에는 [Handlebars](https://handlebarsjs.com/)로 바꿀 예정으로 보인다
+Use the [mustache](https://mustache.github.io/mustache.5.html) template. It seems that it will be changed to [Handlebars](https://handlebarsjs.com/) in the future.
 
-각 언어마다 OpenAPI generator에서 제공하는 mustache 템플릿이 사용된다.
+For each language, the mustache template provided by the OpenAPI generator is used.
 
-retrofit2 library를 사용해서 jvm-retorfit2 템플릿 파일들이 필요하다.
+You need the jvm-retorfit2 template files to use the retrofit2 library.
 
-- libraries/jvm-retrofit2/api.mustache
-    - api.mustache 파일을 추가하면 기존에 있던 api.mustache 파일을 override 한다.
-    - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/api.mustache) 에 있는 api.mustache 파일을 복사해서 수정한다.
-    - 
-- libraries/jvm-retrofit2/bodyParamJavadoc.mustache
-    - bodyParamJavadoc은 새로 추가한 mustache 파일이다
-    - bodyParam에 대한 설명을 추가한다
-- libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
-    - [openapi-genrator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache)에 있는 ResponseExt.kt.mustache 파일을 복사해서 수정한다
+-libraries/jvm-retrofit2/api.mustache
+    - Adding the api.mustache file overrides the existing api.mustache file.
+    - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/api.mustache ) copy and modify the api.mustache file in .
+    -
+-libraries/jvm-retrofit2/bodyParamJavadoc.mustache
+    - bodyParamJavadoc is the newly added mustache file
+    - Add description of bodyParam
+-libraries/jvm-retrofit2/infrastructure/ResponseExt.kt.mustache
+    - [openapi-generator](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/resources/kotlin-client/libraries/jvm-retrofit2/infrastructure/ResponseExt Copy and modify the ResponseExt.kt.mustache file in .kt.mustache)
 
 ### .openapi-generator-ignore
 
-- generator로 생성되는 파일들 중에서 제외를 하고 싶은 경우에 gitignore 패턴처럼 작성한다
-- kotlin generator에서 생성되는 파일들 중에 `GetRewardsRequestAllOf.kt`파일 생성을 하고 싶지 않으면 **/*AllOf.kt filter out 조건을 추가한다.
+- Write like a gitignore pattern in case you want to exclude among the files created by the generator
+- If you do not want to generate `GetRewardsRequestAllOf.kt` file among the files generated by kotlin generator, add **/*AllOf.kt filter out condition.
 
 ### openapi
 
-- generator로 자동 생성된 디렉토리
-- custom 코드를 openapi 디렉토리 안에서 만드는 것은 권장하지 않는다.
-- generate를 돌릴 때마다 매번 삭제되고 다시 생성하는 것을 추천한다.
-- 필요한 utils이나 feature가 있는 경우에는 추가로 module을 만들어서 openapi-test에서 설정하여 test하는 것을 추천한다
-
-### openapi-test
-
-- openapi에서 빌드된 패키지를 이용한다. openapi package는 maven repository에 배포 되었다는 가정하에 jar 파일을 사용하도록 설정을 한다.
-- build.gradle.kts
-
-```kotlin
-dependencies {
-    implementation(files("../openapi/build/libs/caver-kotlin-v1.10.0.jar"))
-}
-```
-
-- javascript나  typescript도 npm으로 배포된 환경으로 테스트를 하기를 권장한다
-- API별로 test 파일을 따로 만든다. OpenAPI spec을 정의할 때에 samples에서 사용한다.
-
-![UserGuide.png](kotlin-test-sample.png)
-
-## site
-
-- klaytn-openapi.yaml
-    - [redocly](https://www.notion.so/User-Guide-for-klaytn-Open-SDK-00525b67fc234d0ba571550e05d1c472)를 사용해서 `yarn build` 로 생성한 OpenAPI들을 정의
-    - 나눠진 API 파일들을 하나의 Yaml 파일로 생성한다
-    - redocly 형식의 API 문서와 SwaggerUI에서 spec으로 사용된다
-- index.html
-    - redocly 형식의 API 문서를 klaytn-openapi.yaml을 기준으로 제공한다
-    - Request samples를 제공해서 원하는 개발 언어의 예제를 볼 수 있다
-- SwaggerUI
-    - Swagger 스타일의 API 문서를 제공한다
-    - SwaggerUI 기능을 제공해서 API들을 직접 웹에서 테스트 가능하다
-    - local, baobab, cypress 서버를 선택해서 CURL 스타일의 API를 온라인으로 테스트 가능하다
+- Directory automatically created by generator
+- custom code for openapi

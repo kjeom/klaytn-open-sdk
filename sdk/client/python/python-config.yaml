@@ -3,7 +3,7 @@ outputDir: ./openapi
 inputSpec: ../../../site/klaytn-openapi.yaml
 projectName: caver-python
 packageName: caver_python
-# templateDir: ./template
+templateDir: ./template
 sortParamsByRequiredFlag: false
 globalProperties:
   apiDocs: false

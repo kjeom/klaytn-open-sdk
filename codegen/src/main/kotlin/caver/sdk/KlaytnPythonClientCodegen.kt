@@ -6,7 +6,7 @@ import org.openapitools.codegen.CodegenOperation
 import org.openapitools.codegen.languages.PythonClientCodegen
 import org.openapitools.codegen.model.ModelsMap
 
-class KlaytnPythonLegacyClientCodegen : PythonClientCodegen {
+class KlaytnPythonClientCodegen : PythonClientCodegen {
     companion object {
         val caverName = "caver-python"
     }

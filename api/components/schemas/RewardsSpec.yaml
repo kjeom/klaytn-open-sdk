@@ -2,14 +2,16 @@ components:
   schemas:
     RewardsReq:
       type: object
+      required:
+        - method
       properties:
         method:
           type: string
           default: 'klay_getRewards'
         params:
           type: array
+          default: ["latest"]
           items:
-            default: "latest"
             oneOf:
               - $ref: "#/components/schemas/BlockNumber"
               - $ref: "#/components/schemas/BlockTag"

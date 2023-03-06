@@ -40,13 +40,22 @@ paths:
         Returns distributed block rewards information at the latest block number
 
         **JSONRPC:** `klay_getRewards`
+      parameters:
+        - name: blockNumberOrTag
+          schema:
+            default:
+              - latest
+            oneOf:
+              - $ref: '#/components/schemas/BlockNumber'
+              - $ref: '#/components/schemas/BlockTag'
+          in: query
       requestBody:
         content:
           application/json:
             schema:
               allOf:
                 - $ref: '#/components/schemas/JsonRpcRequest'
-                - $ref: '#/components/schemas/RewardsReq'
+                - $ref: '#/components/schemas/RewardsMethod'
       responses:
         default:
           description: |
@@ -78,132 +87,6 @@ paths:
                 "latest"
               ]
             }'
-        - lang: typescript
-          label: Typescript
-          source: |
-            import {Configuration, KlayApi} from "../../openapi";
-
-            const configuration = new Configuration({
-                basePath: 'http://localhost:7151',
-            });
-
-            const api = new KlayApi(configuration);
-
-            describe('Klay getRewards API', () => {
-                test('should return info of a block number', async () => {
-                    const response = await api.getRewards(1);
-                    expect(response.data.jsonrpc).toBe("2.0")
-                });
-            });
-        - lang: kotlin
-          label: Kotlin
-          source: |
-            package caver.sdk.apis
-
-            import caver.sdk.infrastructure.result
-            import caver.sdk.models.*
-            import io.kotest.core.spec.style.BehaviorSpec
-            import io.kotest.matchers.maps.shouldNotBeEmpty
-            import retrofit2.Retrofit
-            import okhttp3.OkHttpClient
-            import okhttp3.logging.HttpLoggingInterceptor
-            import retrofit2.converter.gson.JsonRpcConverterFactory
-            import java.math.BigDecimal
-
-            class KlaytnApiGetRewardsTest : BehaviorSpec({
-                val logging = HttpLoggingInterceptor()
-                logging.level = HttpLoggingInterceptor.Level.BODY
-
-                val httpClient = OkHttpClient.Builder().addInterceptor(logging).build()
-
-                Given("In Local Klaytn network") {
-                    val retrofit = Retrofit.Builder().baseUrl("http://localhost:7151")
-                        .addConverterFactory(JsonRpcConverterFactory.create()).client(httpClient).build()
-                    When("Call getRewards") {
-                        val klayApi = retrofit.create(KlayApi::class.java)
-                        Then("return rewards info") {
-                            val request = GetRewardsRequest(params = intArrayOf(1))
-                            println(request)
-                            val rewards = klayApi.getRewards(request).result()
-                            rewards?.result?.rewards?.shouldNotBeEmpty()
-                        }
-                    }
-                    When("Call Service API") {
-                        val apiService = KlayApiService(retrofit)
-                        Then("Get getRewards by number") {
-                            val rewards = apiService.getRewards(BigDecimal.valueOf(1))
-                            rewards?.result?.rewards?.shouldNotBeEmpty()
-                        }
-                    }
-                }
-            })
-        - lang: java
-          label: Java
-          source: |
-            package caver.sdk.apis
-
-            import caver.sdk.models.GetRewardsRequest
-            import io.kotest.assertions.throwables.shouldThrow
-            import io.kotest.core.spec.style.BehaviorSpec
-            import io.kotest.matchers.maps.shouldNotBeEmpty
-            import io.kotest.matchers.shouldBe
-            import io.kotest.matchers.shouldNotBe
-            import retrofit2.Retrofit
-            import retrofit2.converter.gson.GsonConverterFactory
-            import okhttp3.OkHttpClient
-            import okhttp3.logging.HttpLoggingInterceptor
-            import retrofit2.converter.gson.JsonRpcConverterFactory
-            import java.math.BigDecimal
-            import java.net.UnknownHostException
-
-            class KlaytnApiGetRewardsTest : BehaviorSpec({
-                val logging = HttpLoggingInterceptor()
-                logging.level = HttpLoggingInterceptor.Level.BODY
-
-                val httpClient = OkHttpClient.Builder().addInterceptor(logging).build()
-
-                Given("In Local Klaytn network") {
-                    val retrofit = Retrofit.Builder().baseUrl("http://localhost:7151")
-                        .addConverterFactory(JsonRpcConverterFactory.create()).client(httpClient).build()
-                    When("Call KlayApi.getRewards") {
-                        val klayApi = retrofit.create(KlayApi::class.java)
-                        Then("return rewards info") {
-                            val request = GetRewardsRequest()
-                            request.params = intArrayOf(1)
-                            println(request)
-                            val rewards = klayApi.getRewards(request).result()
-                            rewards!!.result!!.rewards.shouldNotBe(null)
-                        }
-                    }
-                    When("Call KlayApiService.getRewards") {
-                        val apiService = KlayApiService(retrofit)
-                        Then("Get getRewards by number") {
-                            val rewards = apiService.getRewards(BigDecimal(1)).result()
-                            rewards.shouldNotBe(null)
-                            rewards!!.result!!.rewards.shouldNotBe(null)
-                        }
-                    }
-                }
-            })
-        - lang: javascript
-          label: Javascript
-          source: |
-            const Caver = require("caver-javascript");
-            const {expect} = require("@jest/globals");
-
-            let api = new Caver.KlayApi(new Caver.ApiClient("http://localhost:7151"));
-
-            describe('Klay getRewards API', () => {
-                test('should return info of a block number', (done) => {
-                    let callbackOne = function (error, data, response) {
-                        expect(error).toBeNull();
-                        expect(data.jsonrpc).toBe("2.0");
-                        console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-                        done();
-                    };
-                    api.getRewards(1, {}, callbackOne);
-                });
-            });
         - lang: python
           label: Python
           source: |
@@ -214,20 +97,11 @@ paths:
             from caver_python.apis.tags.klay_api import KlayApi
 
             class TestKlayGetRewards(unittest.TestCase):
-                _configuration = Configuration(host="http://localhost:8551")
-                klay = KlayApi(ApiClient(configuration=_configuration))
+                host="http://localhost:8551"
+                klay = KlayApi(ApiClient(configuration=Configuration(host=host)))
                 
                 def test_post(self):
-                    get_rewards_request = {
-                        "method": "klay_getRewards",
-                        # "id": 1,
-                        "jsonrpc": "2.0",
-                        # "params": [
-                            # 0
-                        # ]
-                    }
-                    # result = self.klay.get_rewards(body=get_rewards_request)
-                    result = self.klay.get_rewards()
+                    result = self.klay.get_rewards(1.0)
                     print(result)
 
             if __name__ == '__main__':
@@ -435,8 +309,21 @@ paths:
             }'
 components:
   schemas:
+    BlockNumber:
+      title: blockNumber
+      type: integer
+      format: int64
+      description: the block number
+    BlockTag:
+      title: blockTag
+      type: string
+      description: the block tag [latest, pending, eariest]
     JsonRpcRequest:
       type: object
+      required:
+        - method
+        - id
+        - jsonrpc
       properties:
         method:
           type: string
@@ -450,28 +337,17 @@ components:
           type: string
           default: '2.0'
           description: JSON-RPC Version (2.0)
-    BlockNumber:
-      title: blockNumber
-      type: integer
-      format: int64
-      description: the block number
-    BlockTag:
-      title: blockTag
-      type: string
-      description: the block tag [latest, pending, eariest]
-    RewardsReq:
-      type: object
-      properties:
-        method:
-          type: string
-          default: klay_getRewards
         params:
           type: array
-          items:
-            default: latest
-            oneOf:
-              - $ref: '#/components/schemas/BlockNumber'
-              - $ref: '#/components/schemas/BlockTag'
+          items: {}
+    RewardsMethod:
+      type: object
+      required:
+        - method
+      properties:
+        method:
+          default: klay_getRewards
+          type: string
     ErrorMember:
       type: object
       title: ErrorMember

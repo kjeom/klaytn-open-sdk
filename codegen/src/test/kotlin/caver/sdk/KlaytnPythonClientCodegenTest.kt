@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 import org.openapitools.codegen.CodegenConfig
 import java.util.*
 
-class KlaytnPythonLegacyClientCodegenTest : BehaviorSpec({
+class KlaytnPythonClientCodegenTest : BehaviorSpec({
     Given("Klaytn code generator") {
         When("Load by ServiceLoader") {
             Then("should be existed") {
@@ -20,7 +20,7 @@ class KlaytnPythonLegacyClientCodegenTest : BehaviorSpec({
                 for (config in loader) {
                     println(config.name)
                 }
-                loader.find { i -> i.name == KlaytnPythonLegacyClientCodegen.caverName}?.name.shouldBe(KlaytnPythonLegacyClientCodegen.caverName)
+                loader.find { i -> i.name == KlaytnPythonClientCodegen.caverName}?.name.shouldBe(KlaytnPythonClientCodegen.caverName)
             }
         }
         When("Model file name set to KlaytnModel") {

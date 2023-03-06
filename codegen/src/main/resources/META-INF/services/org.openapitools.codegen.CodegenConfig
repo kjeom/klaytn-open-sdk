@@ -2,7 +2,7 @@ caver.sdk.KlaytnTypescriptAxiosClientCodegen
 caver.sdk.KlaytnKotlinClientCodegen
 caver.sdk.KlaytnJavaClientCodegen
 caver.sdk.KlaytnJavascriptClientCodegen
-caver.sdk.KlaytnPythonLegacyClientCodegen
+caver.sdk.KlaytnPythonClientCodegen
 
 org.openapitools.codegen.languages.AdaCodegen
 org.openapitools.codegen.languages.AdaServerCodegen

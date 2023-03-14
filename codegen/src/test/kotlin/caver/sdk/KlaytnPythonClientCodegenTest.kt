@@ -25,7 +25,7 @@ class KlaytnPythonClientCodegenTest : BehaviorSpec({
         }
         When("Model file name set to KlaytnModel") {
             Then("return 'klaytn-model as camel case") {
-                val codeGen = KlaytnPythonLegacyClientCodegen()
+                val codeGen = KlaytnPythonClientCodegen()
                 codeGen.toModelFilename("KlaytnModel").shouldBe("klaytn-model")
             }
         }

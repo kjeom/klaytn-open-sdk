@@ -25,9 +25,10 @@ class KlaytnJavaClientCodegen : JavaClientCodegen {
 
         var supportingFile = supportingFiles.find { it -> it.templateFile.equals("build.gradle.mustache") }
 
-        val apiFolder =
-            (sourceFolder + File.separator + apiPackage).replace(".", "/")
-        supportingFiles.add(SupportingFile("RequestBodyParams.java.mustache", apiFolder, "RequestBodyParams.java"))
+        val modelFolder =
+            (sourceFolder + File.separator + modelPackage).replace(".", "/")
+        // supportingFiles.add(SupportingFile("Request.java.mustache", modelFolder, "Request.java"))
+        // supportingFiles.add(SupportingFile("Web3Service.java.mustache", modelFolder, "Web3Service.java"))
     }
 
     override fun getUseInlineModelResolver(): Boolean {

@@ -38,6 +38,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("org.web3j:core:4.9.7")
 //    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
 
     // Use the kotest for BDD

@@ -8,13 +8,15 @@ components:
         method:
           type: string
           default: 'klay_getRewards'
-        params:
-          type: array
-          default: ["latest"]
-          items:
-            oneOf:
-              - $ref: "#/components/schemas/BlockNumber"
-              - $ref: "#/components/schemas/BlockTag"
+        params: 
+          $ref: "#/components/schemas/params"
+    params:
+      type: array
+      default: ["latest"]
+      items:
+        oneOf:
+          - $ref: "#/components/schemas/BlockNumber"
+          - $ref: "#/components/schemas/BlockTag"
     BlockNumber:
       title: blockNumber
       type: integer
@@ -29,8 +31,8 @@ components:
       type: object
       properties:
         result:
-          $ref: "#/components/schemas/Result" 
-    Result:
+          $ref: "#/components/schemas/GetRewardResult" 
+    GetRewardResult:
       type: object
       required:
         - burntFee

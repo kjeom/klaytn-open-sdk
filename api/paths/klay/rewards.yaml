@@ -20,7 +20,22 @@ paths:
         Returns distributed block rewards information at the latest block number
 
         **JSONRPC:** `klay_getRewards`
-      
+      parameters:
+        - name: blockNumberOrTag
+          required: true
+          schema:
+            oneOf:
+              - type: number
+                title: blockNumber
+                description: BN | BigNumber
+              - type: string
+                title: blockTag
+                example: [latest, pending, earliest]
+            readOnly: true
+          description: |
+            blockNumber is the block number
+            blockTag is the string "latest", "earliest" or "pending"
+          in: query 
       requestBody:
         content:
           application/json:
@@ -41,9 +56,6 @@ paths:
                 allOf:
                   - $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse"
                   - $ref: "../../components/schemas/RewardsSpec.yaml#/components/schemas/RewardsResp"
-            text/plain:
-              schema: 
-                $ref: "../../components/responses/JsonRpcResponse.yaml#/components/schemas/JsonRpcResponse" 
       x-codeSamples:
         - lang: "curl"
           label: "Curl"
